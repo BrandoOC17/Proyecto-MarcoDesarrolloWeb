@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos | Infinity Station</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+
+    <!-- Google Fonts Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Fonts Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+    <!-- GESTIÓN DE PEDIDOS -->
+    <main class="container my-5">
+
+        <!-- Título -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="bi bi-cart-check me-2 text-primary"></i>
+                    Panel de Pedidos
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Administra y da seguimiento a las compras de los videojuegos y accesorios
+                </p>
+            </div>
+        </div>
+
+
+        <!-- TARJETAS DE RESUMEN -->
+        <div class="row g-3 mb-4">
+
+            <!-- Pedidos completados -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <p class="text-muted mb-1">Pedidos completados</p>
+
+                    <h4 class="fw-bold mb-0 text-success"
+                        th:text="${pedidosCompletados}">
+                        0
+                    </h4>
+                </div>
+            </div>
+
+
+            <!-- Pedidos pendientes -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-sm border-0 p-3">
+                    <p class="text-muted mb-1">Pedidos pendientes</p>
+
+                    <h4 class="fw-bold mb-0 text-warning"
+                        th:text="${pedidosPendientes}">
+                        0
+                    </h4>
+                </div>
+            </div>
+
+
+            <!-- Ingresos del mes -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="card shadow-sm border-0 p-3 text-black">
+                    <p class="mb-1 opacity-75">Ingresos del mes</p>
+
+                    <h4 class="fw-bold mb-0"
+                        th:text="'S/ ' + ${ingresosMes}">
+                        S/ 0.00
+                    </h4>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- TABLA DETALLADA DE PEDIDOS -->
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold">
+                    Listado de Órdenes Recientes
+                </h5>
+            </div>
+
+
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th class="ps-3">ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Producto</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th class="text-end pe-3">Acciones</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <!-- PEDIDOS DINÁMICOS -->
+                            <tr th:each="pedido : ${pedidos}">
+
+                                <td class="ps-3 fw-bold"
+                                    th:text="${pedido.id}">
+                                    #ORD-0000
+                                </td>
+
+                                <td th:text="${pedido.cliente}">
+                                    Cliente
+                                </td>
+
+                                <td th:text="${pedido.producto}">
+                                    Videojuego
+                                </td>
+
+                                <td th:text="'S/ ' + ${pedido.total}">
+                                    S/ 0.00
+                                </td>
+
+                                <td>
+                                    <span th:if="${#strings.toUpperCase(pedido.estado) == 'COMPLETADO'}"
+                                          class="badge bg-success">
+                                        Completado
+                                    </span>
+
+                                    <span th:if="${#strings.toUpperCase(pedido.estado) == 'PENDIENTE'}"
+                                          class="badge bg-warning text-dark">
+                                        Pendiente
+                                    </span>
+                                </td>
+
+                                <td class="text-end pe-3">
+
+                                    <button
+                                        class="btn btn-sm btn-outline-primary btn-ver-detalle"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalDetalleProducto"
+                                        th:data-nombre="${pedido.producto}"
+                                        th:data-precio="'S/ ' + ${pedido.total}"
+                                        th:data-tag="${pedido.plataforma}"
+                                        th:data-cantidad="${pedido.cantidad}"
+                                        th:data-img="${pedido.imagen}"
+                                        title="Ver detalles">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- MODAL -->
+    <div class="modal fade"
+         id="modalDetalleProducto"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-md">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-body-tertiary">
+
+                    <h5 class="modal-title fw-bold">
+                        Vista del Producto Elegido
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body p-4">
+
+                    <p class="mb-3 vendido-por">
+                        Vendido por:
+                        <strong class="vendedor">
+                            Infinity Station
+                        </strong>
+                    </p>
+
+                    <hr class="mt-0">
+
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-4 text-center">
+
+                            <img id="modal-img"
+                                 src=""
+                                 alt="Producto"
+                                 class="img-fluid rounded border p-2"
+                                 style="max-height: 280px;">
+
+                        </div>
+
+
+                        <div class="col-md-8">
+
+                            <h4 id="modal-nombre"
+                                class="fw-bold">
+                            </h4>
+
+                            <p id="modal-precio"
+                               class="text-muted mb-1">
+                            </p>
+
+                            <span id="modal-tag"
+                                  class="badge bg-secondary">
+                            </span>
+
+
+                            <div class="mt-3">
+
+                                <span class="fw-bold">
+                                    Cantidad:
+                                </span>
+
+                                <span id="modal-cantidad"
+                                      class="badge bg-primary fs-6">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTÓN SCROLL UP -->
+    <a th:href="@{#}"
+       class="btn btn-primary rounded-0 position-fixed bottom-0 end-0 m-4 d-none"
+       id="scrollUpBtn">
+
+        <i class="fa-solid fa-angle-up"></i>
+
+    </a>
+
+
+    <!-- FOOTER -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript Principal -->
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Station</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+
+    <!-- Google Fonts Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Fonts Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+    <!-- CABECERA -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <!-- BANNER -->
+        <section id="banner">
+
+            <img class="img-fluid" th:src="@{/img/banner.jpg}" alt="Banner Infinity Station">
+
+            <div class="banner-content">
+
+                <i class="fa-brands fa-playstation fa-4x"></i>
+
+                <h1>Infinity Station</h1>
+
+                <p>
+                    Los mejores videojuegos, consolas y accesorios
+                    para fanáticos de PlayStation
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATÁLOGO -->
+        <section id="tarifas" class="padding-xl">
+
+            <div class="container">
+
+                <div class="subtitulo mb-4">
+
+                    <i class="fa-solid fa-gamepad"></i>
+
+                    <h4>Lo más esperado del año</h4>
+
+                </div>
+
+                <h2 class="titulo mb-4">
+                    Catálogo de lanzamiento
+                </h2>
+
+
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-hover table-bordered align-middle">
+
+                        <thead>
+
+                            <tr>
+                                <th>Nombre del juego</th>
+                                <th>Peso (GB)</th>
+                                <th>Jugadores</th>
+                                <th>Precio (PEN)</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Call of Duty: Black OPS III</td>
+                                <td>125</td>
+                                <td>Multiplayer</td>
+                                <td>S/ 89.99</td>
+                            </tr>
+
+                            <tr>
+                                <td>Marvel Spider-Man 2</td>
+                                <td>87</td>
+                                <td>Singleplayer</td>
+                                <td>S/ 310.99</td>
+                            </tr>
+
+                            <tr>
+                                <td>EA Sports FC 26</td>
+                                <td>55</td>
+                                <td>Singleplayer/Multiplayer</td>
+                                <td>S/ 280.99</td>
+                            </tr>
+
+                            <tr>
+                                <td>Astro Bot</td>
+                                <td>66</td>
+                                <td>Singleplayer</td>
+                                <td>S/ 206.99</td>
+                            </tr>
+
+                            <tr>
+                                <td>The Last of Us Part II</td>
+                                <td>78</td>
+                                <td>Singleplayer</td>
+                                <td>S/ 179.99</td>
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+
+                                <td colspan="4" class="text-center">
+                                    (*) Devoluciones disponibles hasta 6 horas
+                                    después de la compra
+                                </td>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTOS -->
+        <section id="productos" class="padding-xl">
+
+            <div class="container">
+
+                <div class="subtitulo">
+
+                    <i class="fa-brands fa-playstation"></i>
+
+                    <h4>Últimas novedades</h4>
+
+                </div>
+
+                <h2 class="titulo">
+                    Nuestros productos destacados
+                </h2>
+
+
+                <div class="row row-cols-1 row-cols-md-4 g-4 padding-xs">
+
+
+                    <!-- GOD OF WAR -->
+                    <div class="col">
+
+                        <div class="card h-100">
+
+                            <img class="img-fluid card-img-top" th:src="@{/img/god_of_war_ragnarok.png}"
+                                alt="God of War Ragnarok">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    God of War Ragnarok
+                                </h5>
+
+                                <p class="card-text">
+                                    S/ 150.99
+                                </p>
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button class="btn btn-outline-secondary btn-agregar" data-id="gow-ragnarok"
+                                        data-precio="150.99" data-plataforma="PS5" data-bs-toggle="modal"
+                                        data-bs-target="#cartModal">
+
+                                        Agregar al carro
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CALL OF DUTY -->
+                    <div class="col">
+
+                        <div class="card h-100">
+
+                            <img class="img-fluid card-img-top" th:src="@{/img/call_of_duty_black_ops3.jpg}"
+                                alt="Call of Duty Black OPS III">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    Call of Duty: Black OPS III
+                                </h5>
+
+                                <p class="card-text">
+                                    S/ 89.99
+                                </p>
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button class="btn btn-outline-secondary btn-agregar" data-id="cod-bo3"
+                                        data-precio="89.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                        data-bs-target="#cartModal">
+
+                                        Agregar al carro
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- THE LAST OF US -->
+                    <div class="col">
+
+                        <div class="card h-100">
+
+                            <img class="img-fluid card-img-top" th:src="@{/img/the_last_of_us_part2.png}"
+                                alt="The Last of Us Part II">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    The Last of Us Part II
+                                </h5>
+
+                                <p class="card-text">
+                                    S/ 179.99
+                                </p>
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button class="btn btn-outline-secondary btn-agregar" data-id="tlou2"
+                                        data-precio="179.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                        data-bs-target="#cartModal">
+
+                                        Agregar al carro
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GRAN TURISMO -->
+                    <div class="col">
+
+                        <div class="card h-100">
+
+                            <img class="img-fluid card-img-top" th:src="@{/img/gran_turismo7.png}" alt="Gran Turismo 7">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    Gran Turismo 7
+                                </h5>
+
+                                <p class="card-text">
+                                    S/ 165.99
+                                </p>
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button class="btn btn-outline-secondary btn-agregar" data-id="gt7"
+                                        data-precio="165.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                        data-bs-target="#cartModal">
+
+                                        Agregar al carro
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="text-center mt-4">
+
+                    <a th:href="@{/videojuegos}" class="btn btn-primary btn-ver-mas fw-bold enlace-azul">
+
+                        Ver más
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONSOLAS Y ACCESORIOS -->
+        <section id="accesorios" class="padding-xl">
+
+            <div class="container">
+
+                <div class="subtitulo">
+
+                    <i class="fa-solid fa-gamepad"></i>
+
+                    <h4>Consolas y accesorios</h4>
+
+                </div>
+
+                <h2 class="titulo">
+                    Complementa tu experiencia PS5
+                </h2>
+
+
+                <div id="carruselAccesorios" class="carousel carousel-dark slide mt-4">
+
+
+                    <div class="position-relative px-5">
+
+                        <div class="carousel-inner">
+
+
+                            <!-- 1. PS5 -->
+                            <div class="carousel-item active">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Consola PlayStation 5
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Juega la nueva generación con gráficos
+                                            rápidos y tiempos de carga mínimos.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 2399.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="ps5-slim"
+                                                data-nombre="Consola PlayStation 5"
+                                                th:attr="data-imagen=@{/img/play5.png}" data-precio="2399.00"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/play5.png}"
+                                        alt="Consola PlayStation 5">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 2. PS5 PRO -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Consola PlayStation 5 Pro
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            La consola más potente de PlayStation,
+                                            con mejores efectos visuales y más fluidez.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 4199.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="ps5-pro"
+                                                data-nombre="Consola PlayStation 5 Pro"
+                                                th:attr="data-imagen=@{/img/play5Pro.png}" data-precio="4199.00"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/play5Pro.png}"
+                                        alt="Consola PlayStation 5 Pro">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 3. DUALSENSE -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Control inalámbrico DualSense
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Sumérgete en la experiencia de juego
+                                            con un control compatible con la respuesta
+                                            háptica y los efectos de gatillo dinámicos.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 329.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="dualsense"
+                                                data-nombre="Control inalámbrico DualSense"
+                                                th:attr="data-imagen=@{/img/control_inalambrico_dualSense.png}"
+                                                data-precio="329.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/control_inalambrico_dualSense.png}"
+                                        alt="Control DualSense">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 4. PULSE ELITE -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Auriculares inalámbricos PULSE Elite
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Disfruta de un sonido realista en el juego
+                                            con este casco de diseño cómodo, equipado
+                                            con un micrófono retráctil y batería de larga duración.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 699.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="pulse-elite"
+                                                data-nombre="Auriculares inalámbricos PULSE Elite"
+                                                th:attr="data-imagen=@{/img/auriculares_inalambrico_PulseElite.png}"
+                                                data-precio="699.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img"
+                                        th:src="@{/img/auriculares_inalambrico_PulseElite.png}"
+                                        alt="Auriculares PULSE Elite">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 5. PULSE EXPLORE -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Audífonos inalámbricos PULSE Explore
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Disfruta de un sonido de juego hiperrealista
+                                            dondequiera que juegues gracias al diseño portátil,
+                                            los micrófonos ocultos integrados y el estuche de carga complementario.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 749.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                data-id="pulse-explore"
+                                                data-nombre="Audífonos inalámbricos PULSE Explore"
+                                                th:attr="data-imagen=@{/img/auriculares_inalambrico_PulseExplore.png}"
+                                                data-precio="749.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img"
+                                        th:src="@{/img/auriculares_inalambrico_PulseExplore.png}"
+                                        alt="Audífonos PULSE Explore">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 6. DUALSENSE EDGE -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Control inalámbrico DualSense Edge
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Deja tu marca en el juego con botones reasignables,
+                                            gatillos y joysticks ajustables, tapas de joystick
+                                            intercambiables, botones traseros y más.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 899.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                data-id="dualsense-edge" data-nombre="Control DualSense Edge"
+                                                th:attr="data-imagen=@{/img/control_inalambrico_Edge.png}"
+                                                data-precio="899.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/control_inalambrico_Edge.png}"
+                                        alt="Control DualSense Edge">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 7. ACCESS -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Control Access
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Un kit de control de PlayStation®5
+                                            altamente personalizable, diseñado para
+                                            hacer que los juegos sean más accesibles.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 359.00
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="access"
+                                                data-nombre="Control Access"
+                                                th:attr="data-imagen=@{/img/control_access.png}" data-precio="359.00"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/control_access.png}"
+                                        alt="Control Access">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 8. CONTROL MULTIMEDIA -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Control multimedia
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Controla cómodamente las películas,
+                                            los servicios de transmisión y mucho más
+                                            en tu consola PS5 gracias a un diseño intuitivo.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 59.99
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                data-id="control-multimedia" data-nombre="Control multimedia"
+                                                th:attr="data-imagen=@{/img/control_multimedia.png}" data-precio="59.99"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/control_multimedia.png}"
+                                        alt="Control multimedia">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- 9. CÁMARA HD -->
+                            <div class="carousel-item">
+
+                                <div
+                                    class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+
+                                    <div class="texto-slide text-center text-md-start">
+
+                                        <h3>
+                                            Cámara HD
+                                        </h3>
+
+                                        <p class="text-muted">
+                                            Aparece en tus propios videos y transmisiones
+                                            de juego gracias a la captura Full HD de excelente
+                                            nitidez y definición.
+                                        </p>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+
+                                            <span class="precio-slide fs-3 fw-bold">
+                                                S/ 139.99
+                                            </span>
+
+                                            <button class="btn btn-outline-secondary btn-agregar" data-id="camara-hd"
+                                                data-nombre="Cámara HD" th:attr="data-imagen=@{/img/camaraHD.png}"
+                                                data-precio="139.99" data-plataforma="PS5" data-bs-toggle="modal"
+                                                data-bs-target="#cartModal">
+
+                                                Agregar al carro
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    <img class="img-fluid slide-img" th:src="@{/img/camaraHD.png}" alt="Cámara HD">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MINIATURAS -->
+                    <div class="position-relative mt-4">
+
+                        <button class="flecha-mini flecha-prev" type="button" data-bs-target="#carruselAccesorios"
+                            data-bs-slide="prev" aria-label="Anterior">
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </button>
+
+
+                        <button class="flecha-mini flecha-next" type="button" data-bs-target="#carruselAccesorios"
+                            data-bs-slide="next" aria-label="Siguiente">
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+
+                        <div id="miniaturas"
+                            class="miniaturas position-relative d-flex flex-nowrap gap-3 overflow-auto">
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn active" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="0" aria-label="Ver Consola PS5">
+
+                                    <img class="img-fluid" th:src="@{/img/play5.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Consola PS5
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="1" aria-label="Ver PS5 Pro">
+
+                                    <img class="img-fluid" th:src="@{/img/play5Pro.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    PS5 Pro
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="2" aria-label="Ver DualSense">
+
+                                    <img class="img-fluid" th:src="@{/img/control_inalambrico_dualSense.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Control inalámbrico DualSense
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="3" aria-label="Ver PULSE Elite">
+
+                                    <img class="img-fluid" th:src="@{/img/auriculares_inalambrico_PulseElite.png}"
+                                        alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Auriculares inalámbricos PULSE Elite
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="4" aria-label="Ver PULSE Explore">
+
+                                    <img class="img-fluid" th:src="@{/img/auriculares_inalambrico_PulseExplore.png}"
+                                        alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Auriculares inalámbricos PULSE Explore
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="5" aria-label="Ver DualSense Edge">
+
+                                    <img class="img-fluid" th:src="@{/img/control_inalambrico_Edge.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    DualSense Edge
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="6" aria-label="Ver Control Access">
+
+                                    <img class="img-fluid" th:src="@{/img/control_access.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Control Access
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="7" aria-label="Ver Control multimedia">
+
+                                    <img class="img-fluid" th:src="@{/img/control_multimedia.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Control multimedia
+                                </span>
+
+                            </div>
+
+
+                            <div class="miniatura text-center">
+
+                                <button type="button" class="miniatura-btn" data-bs-target="#carruselAccesorios"
+                                    data-bs-slide-to="8" aria-label="Ver Cámara HD">
+
+                                    <img class="img-fluid" th:src="@{/img/camaraHD.png}" alt="">
+
+                                </button>
+
+                                <span class="miniatura-nombre d-block">
+                                    Cámara HD
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INDICADORES -->
+                    <div class="carousel-indicators position-static mx-0 mt-3 mb-0">
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="1">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="1" aria-label="2">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="2" aria-label="3">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="3" aria-label="4">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="4" aria-label="5">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="5" aria-label="6">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="6" aria-label="7">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="7" aria-label="8">
+                        </button>
+
+                        <button type="button" data-bs-target="#carruselAccesorios" data-bs-slide-to="8" aria-label="9">
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+
+    <!-- BOTÓN SCROLL UP -->
+    <a href="#" class="btn btn-primary rounded-0 position-fixed bottom-0 end-0 m-4 d-none" id="scrollUpBtn">
+
+        <i class="fa-solid fa-angle-up"></i>
+
+    </a>
+
+
+    <!-- MODAL DE PRODUCTO AGREGADO -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header border-0 pb-0">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body text-center pt-0 pb-4">
+
+                    <i class="fa-solid fa-circle-check text-success fa-3x mb-3"></i>
+
+                    <h5 class="modal-title mb-2" id="cartModalLabel">
+                        ¡Éxito!
+                    </h5>
+
+                    <p class="fs-5 mb-0 text-muted">
+                        Se agregó correctamente al carro
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript propio -->
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+
+</html>
