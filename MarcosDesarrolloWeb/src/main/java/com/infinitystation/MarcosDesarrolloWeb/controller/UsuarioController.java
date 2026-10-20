@@ -1,3 +1,4 @@
+
 package com.infinitystation.MarcosDesarrolloWeb.controller;
 
 import com.infinitystation.MarcosDesarrolloWeb.model.Usuario;
@@ -27,18 +28,18 @@ public class UsuarioController {
             @RequestParam String correo,
             @RequestParam String password) {
 
-        // 1. Validar si es el administrador único
-        if ("adminInfinity@gmail.com".equals(correo) && "Keys2026".equals(password)) {
+        //credenciales del administrador.
+        if ("adminInfinity@gmail.com".equals(correo)
+                && "Keys2026".equals(password)) {
             return "redirect:/administracion";
         }
 
-        // 2. Si es un usuario normal, validar mediante el servicio
+        // Valida las credenciales del usuario con mysql
         if (usuarioService.validarUsuario(correo, password)) {
             return "redirect:/";
         }
 
-        // Si falla la validación, recarga el login
-        return "login";
+        return "redirect:/login?error";
     }
 
     @GetMapping("/registro")
@@ -48,21 +49,25 @@ public class UsuarioController {
 
     @PostMapping("/registro")
     public String registrar(
+        //aqui requestparam recibe datos ojito cepre
             @RequestParam String nombre,
             @RequestParam String correo,
             @RequestParam String password,
             @RequestParam String confirmPassword) {
 
+        // Comprueba que ambas contraseñas coincidan.
         if (!password.equals(confirmPassword)) {
-            return "registro";
+            return "redirect:/registro?error=password";
         }
 
+        // Crea el usuario con los datos recibidos del formulario.
         Usuario usuario = new Usuario(nombre, correo, password);
 
+        // GUARDA AL USUARIO EN LA BD, SI YA EXISTE EL CORREO, REDIRIGE ERROR
         if (!usuarioService.registrarUsuario(usuario)) {
-            return "registro";
+            return "redirect:/registro?error=correo";
         }
 
-        return "redirect:/login";
+        return "redirect:/login?registro=exitoso";
     }
 }

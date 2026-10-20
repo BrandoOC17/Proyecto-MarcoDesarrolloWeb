@@ -1,129 +1,112 @@
+
 package com.infinitystation.MarcosDesarrolloWeb.service;
 
-import com.infinitystation.MarcosDesarrolloWeb.model.Producto;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.infinitystation.MarcosDesarrolloWeb.model.Producto;
+import com.infinitystation.MarcosDesarrolloWeb.repository.ProductoRepository;
+
 @Service
 public class ProductoService {
 
-    private final List<Producto> productos = new ArrayList<>();
+        // Permite acceder a los productos almacenados en MySQL.
+        private final ProductoRepository productoRepository;
 
-    public ProductoService() {
+        public ProductoService(ProductoRepository productoRepository) {
+                this.productoRepository = productoRepository;
 
-        productos.add(new Producto(
-                "cod-bo3",
-                "Call of Duty: Black OPS III",
-                89.99,
-                "PS4",
-                "/img/call_of_duty_black_ops3.jpg"
-        ));
+                // Registra los productos iniciales solo si la tabla está vacía.
+                if (productoRepository.count() == 0) {
 
-        productos.add(new Producto(
-                "fc26",
-                "EA Sports FC 26",
-                280.99,
-                "PS4",
-                "/img/fc26.png"
-        ));
+                List<Producto> productosIniciales = List.of(
+                        new Producto(
+                        "Call of Duty: Black OPS III",
+                        89.99,
+                        "PS4",
+                        "/img/call_of_duty_black_ops3.jpg"
+                        ),
+                        new Producto(
+                        "EA Sports FC 26",
+                        280.99,
+                        "PS4",
+                        "/img/fc26.png"
+                        ),
+                        new Producto(
+                        "Marvel Spider-Man 2",
+                        310.99,
+                        "PS5",
+                        "/img/marvel_spider_man2.png"
+                        ),
+                        new Producto(
+                        "Astro Bot",
+                        206.99,
+                        "PS5",
+                        "/img/astrobot.png"
+                        ),
+                        new Producto(
+                        "God of War Ragnarok",
+                        150.99,
+                        "PS5",
+                        "/img/god_of_war_ragnarok.png"
+                        ),
+                        new Producto(
+                        "The Last of Us Part II",
+                        179.99,
+                        "PS4",
+                        "/img/the_last_of_us_part2.png"
+                        ),
+                        new Producto(
+                        "Horizont Zero Dawn",
+                        150.99,
+                        "PS5",
+                        "/img/horizont_zero_dawn_remastered.png"
+                        ),
+                        new Producto(
+                        "Gran Turismo 7",
+                        165.99,
+                        "PS4",
+                        "/img/gran_turismo7.png"
+                        ),
+                        new Producto(
+                        "Uncharted 4",
+                        69.99,
+                        "PS4",
+                        "/img/uncharted4.jpg"
+                        ),
+                        new Producto(
+                        "Resident Evil 3",
+                        120.99,
+                        "PS4",
+                        "/img/resident_evil3.jpg"
+                        ),
+                        new Producto(
+                        "Red Dead Redemption II",
+                        150.99,
+                        "PS4",
+                        "/img/red_dead_redemption2.jpg"
+                        ),
+                        new Producto(
+                        "Ghost of Tsushima",
+                        170.99,
+                        "PS4",
+                        "/img/ghost.jpg"
+                        )
+                );
 
-        productos.add(new Producto(
-                "spiderman2",
-                "Marvel Spider-Man 2",
-                310.99,
-                "PS5",
-                "/img/marvel_spider_man2.png"
-        ));
-
-        productos.add(new Producto(
-                "astrobot",
-                "Astro Bot",
-                206.99,
-                "PS5",
-                "/img/astrobot.png"
-        ));
-
-        productos.add(new Producto(
-                "gow-ragnarok",
-                "God of War Ragnarok",
-                150.99,
-                "PS5",
-                "/img/god_of_war_ragnarok.png"
-        ));
-
-        productos.add(new Producto(
-                "tlou2",
-                "The Last of Us Part II",
-                179.99,
-                "PS4",
-                "/img/the_last_of_us_part2.png"
-        ));
-
-        productos.add(new Producto(
-                "horizon",
-                "Horizont Zero Dawn",
-                150.99,
-                "PS5",
-                "/img/horizont_zero_dawn_remastered.png"
-        ));
-
-        productos.add(new Producto(
-                "gt7",
-                "Gran Turismo 7",
-                165.99,
-                "PS4",
-                "/img/gran_turismo7.png"
-        ));
-
-        productos.add(new Producto(
-                "uncharted4",
-                "Uncharted 4",
-                69.99,
-                "PS4",
-                "/img/uncharted4.jpg"
-        ));
-
-        productos.add(new Producto(
-                "re3",
-                "Resident Evil 3",
-                120.99,
-                "PS4",
-                "/img/resident_evil3.jpg"
-        ));
-
-        productos.add(new Producto(
-                "rdr2",
-                "Red Dead Redemption II",
-                150.99,
-                "PS4",
-                "/img/red_dead_redemption2.jpg"
-        ));
-
-        productos.add(new Producto(
-                "ghost",
-                "Ghost of Tsushima",
-                170.99,
-                "PS4",
-                "/img/ghost.jpg"
-        ));
-    }
-
-    public List<Producto> listarProductos() {
-        return productos;
-    }
-
-    public Producto buscarPorId(String id) {
-
-        for (Producto producto : productos) {
-
-            if (producto.getId().equals(id)) {
-                return producto;
-            }
+                // Guarda los productos; MySQL genera cada ID automáticamente.
+                productoRepository.saveAll(productosIniciales);
+                }
         }
 
-        return null;
-    }
-}
+        // Consulta y devuelve todos los productos almacenados en MySQL.
+        public List<Producto> listarProductos() {
+                return productoRepository.findAll();
+        }
+
+        // Busca un producto mediante su ID numérico.
+        public Producto buscarPorId(Long id) {
+                return productoRepository.findById(id).orElse(null);
+        }
+        }

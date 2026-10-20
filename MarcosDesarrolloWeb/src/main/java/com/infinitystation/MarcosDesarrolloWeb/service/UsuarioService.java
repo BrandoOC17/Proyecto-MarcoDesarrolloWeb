@@ -1,38 +1,47 @@
+
 package com.infinitystation.MarcosDesarrolloWeb.service;
 
-import com.infinitystation.MarcosDesarrolloWeb.model.Usuario;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.infinitystation.MarcosDesarrolloWeb.model.Usuario;
+import com.infinitystation.MarcosDesarrolloWeb.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
 
-    private final List<Usuario> usuarios = new ArrayList<>();
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     public boolean registrarUsuario(Usuario usuario) {
 
-        for (Usuario u : usuarios) {
-
-            if (u.getCorreo().equals(usuario.getCorreo())) {
-                return false;
-            }
+        if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
+            return false;
         }
 
-        usuarios.add(usuario);
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        usuarioRepository.save(usuario);
 
         return true;
     }
 
-    public boolean validarUsuario(String correo, String password) {
+    public boolean validarUsuario(String correo, String contraseña) {
+
+        List<Usuario> usuarios = usuarioRepository.findAll();
 
         for (Usuario usuario : usuarios) {
-
             if (usuario.getCorreo().equals(correo)
-                    && usuario.getPassword().equals(password)) {
-
+                    && passwordEncoder.matches(contraseña, usuario.getPassword())) {
                 return true;
             }
         }
@@ -41,6 +50,6 @@ public class UsuarioService {
     }
 
     public List<Usuario> listarUsuarios() {
-        return usuarios;
+        return usuarioRepository.findAll();
     }
 }
