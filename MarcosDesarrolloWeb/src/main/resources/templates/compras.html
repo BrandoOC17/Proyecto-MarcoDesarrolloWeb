@@ -11,10 +11,11 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
+    <link rel="shortcut icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}"
+        type="image/x-icon">
 
     <!-- Google Fonts Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,7 +88,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JavaScript propio (aquí están obtenerCompras, escaparHTML y formatoSoles) -->
-    <script th:src="@{/js/script.js}"></script>
+    <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
 
 
 </body>

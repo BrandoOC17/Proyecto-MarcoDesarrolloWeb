@@ -329,6 +329,75 @@
     border-color: #0e2d8a;
 }
 
+.pago-modal {
+    border: 0;
+    border-radius: 22px;
+    box-shadow: 0 18px 55px rgba(19, 34, 70, 0.2);
+}
+
+.pago-etiqueta {
+    color: #1239ac;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.metodo-pago-opcion {
+    padding: 1.5rem;
+    color: inherit;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #e2e7f0;
+    border-radius: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.metodo-pago-opcion:hover,
+.metodo-pago-opcion:focus-visible {
+    border-color: #1239ac;
+    box-shadow: 0 8px 24px rgba(18, 57, 172, 0.12);
+    transform: translateY(-2px);
+}
+
+.metodo-pago-icono,
+.pago-confirmado-icono {
+    display: inline-grid;
+    width: 3rem;
+    height: 3rem;
+    color: #1239ac;
+    place-items: center;
+    background: #eef2ff;
+    border-radius: 50%;
+    font-size: 1.25rem;
+}
+
+.metodo-pago-icono.yape-icono {
+    color: #6d167e;
+    background: #f7eafa;
+}
+
+.pago-volver {
+    color: #1239ac;
+    text-decoration: none;
+}
+
+.pago-qr {
+    display: block;
+    width: min(100%, 280px);
+    height: auto;
+    margin: 1rem auto 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+}
+
+.pago-confirmado-icono {
+    width: 4rem;
+    height: 4rem;
+    color: #198754;
+    background: #eaf7ef;
+    font-size: 1.6rem;
+}
+
 /* Boton crear cuenta */
 .enlace-azul {
     background-color: #1239AC;

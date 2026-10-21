@@ -321,9 +321,9 @@ function obtenerCompras() {
 }
 
 // Pasa lo que hay en el carrito al historial de compras y vacía el carrito
-function registrarCompra() {
+function registrarCompra(metodoPago) {
     const carrito = obtenerCarrito();
-    if (carrito.length === 0) return false;
+    if (carrito.length === 0) return null;
 
     const compras = obtenerCompras();
     const fecha = new Date().toISOString();
@@ -338,25 +338,85 @@ function registrarCompra() {
             cantidad: j.cantidad,
             plataforma: j.plataforma,
             fecha: fecha,
-            estado: "Pagado"
+            estado: "Demostración local",
+            metodoPago: metodoPago
         });
     });
 
     localStorage.setItem(CLAVE_COMPRAS, JSON.stringify(compras));
     guardarCarrito([]);
     actualizarContador();
-    return true;
+    return numeroPedido;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     const btnPagar = document.getElementById("btn-pagar");
     if (!btnPagar) return; // esta página no es el carrito
 
-    btnPagar.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (registrarCompra()) {
-            window.location.href = "/compras";
+    const modalElemento = document.getElementById("modal-pago");
+    const modalPago = new bootstrap.Modal(modalElemento);
+    const opcionesPago = document.getElementById("opciones-pago");
+    const panelYape = document.getElementById("pago-yape");
+    const panelTarjeta = document.getElementById("pago-tarjeta");
+    const panelConfirmado = document.getElementById("pago-confirmado");
+    const formularioTarjeta = document.getElementById("formulario-tarjeta");
+    const total = document.getElementById("resumen-subtotal").textContent;
+    document.getElementById("total-pago-yape").textContent = "Total: " + total;
+    document.getElementById("total-pago-tarjeta").textContent = "Total: " + total;
+
+    function mostrarConfirmacion(metodoPago) {
+        if (!registrarCompra(metodoPago)) return;
+
+        opcionesPago.classList.add("d-none");
+        panelYape.classList.add("d-none");
+        panelTarjeta.classList.add("d-none");
+        panelConfirmado.classList.remove("d-none");
+        document.getElementById("mensaje-pago-confirmado").textContent =
+            "En una compra real, tu pedido y el comprobante se enviarían al correo registrado en un plazo máximo de 3 días. Esta demostración es local: no se realizó ningún cobro ni se envió un correo.";
+    }
+
+    btnPagar.addEventListener("click", () => {
+        opcionesPago.classList.remove("d-none");
+        panelYape.classList.add("d-none");
+        panelTarjeta.classList.add("d-none");
+        panelConfirmado.classList.add("d-none");
+        formularioTarjeta.reset();
+        formularioTarjeta.classList.remove("was-validated");
+        modalPago.show();
+    });
+
+    modalElemento.addEventListener("click", (event) => {
+        const metodo = event.target.closest("[data-metodo]");
+        if (metodo) {
+            opcionesPago.classList.add("d-none");
+            panelYape.classList.toggle("d-none", metodo.dataset.metodo !== "Yape");
+            panelTarjeta.classList.toggle("d-none", metodo.dataset.metodo !== "Tarjeta");
+            return;
         }
+
+        if (event.target.closest("[data-volver-pago]")) {
+            panelYape.classList.add("d-none");
+            panelTarjeta.classList.add("d-none");
+            opcionesPago.classList.remove("d-none");
+            return;
+        }
+
+        const confirmar = event.target.closest("[data-confirmar-pago]");
+        if (confirmar) mostrarConfirmacion(confirmar.dataset.confirmarPago);
+    });
+
+    formularioTarjeta.addEventListener("submit", (event) => {
+        event.preventDefault();
+        formularioTarjeta.classList.add("was-validated");
+        if (formularioTarjeta.checkValidity()) {
+            mostrarConfirmacion("Tarjeta");
+            formularioTarjeta.reset();
+        }
+    });
+
+    modalElemento.addEventListener("hidden.bs.modal", () => {
+        formularioTarjeta.reset();
+        formularioTarjeta.classList.remove("was-validated");
     });
 });
 
@@ -408,7 +468,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="col-6 col-md-3"><dt>N.º de pedido</dt><dd>${escaparHTML(c.numeroPedido)}</dd></div>
                                 <div class="col-6 col-md-3"><dt>Plataforma</dt><dd>${escaparHTML(c.plataforma || "-")}</dd></div>
                                 <div class="col-6 col-md-3"><dt>Cantidad</dt><dd>${c.cantidad}</dd></div>
-                                <div class="col-6 col-md-3"><dt>Estado</dt><dd><span class="badge rounded-pill text-bg-success">${escaparHTML(c.estado)}</span></dd></div>
+                                <div class="col-6 col-md-3"><dt>Método de pago</dt><dd>${escaparHTML(c.metodoPago || "-")}</dd></div>
+                                <div class="col-6 col-md-3"><dt>Estado</dt><dd><span class="badge rounded-pill ${c.estado === "Demostración local" ? "text-bg-info" : "text-bg-success"}">${escaparHTML(c.estado)}</span></dd></div>
                             </dl>
                             <p class="mb-0 fw-semibold">Total pagado: ${formatoSoles(c.precio * c.cantidad)}</p>
                         </div>
