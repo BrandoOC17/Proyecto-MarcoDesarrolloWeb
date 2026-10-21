@@ -105,7 +105,7 @@ function renderCarrito() {
             <div class="text-center py-5">
                 <i class="fa-solid fa-cart-shopping fs-1 text-muted mb-3"></i>
                 <p class="mb-3 carrito-vacio">Tu carro está vacío</p>
-                <a href="videojuegos.html" class="btn btn-primary fw-bold enlace-azul">Ver videojuegos</a>
+                <a href="/videojuegos" class="btn btn-primary fw-bold enlace-azul">Ver videojuegos</a>
             </div>`;
     } else {
         lista.innerHTML = carrito.map(j => `
@@ -280,4 +280,31 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+});
+
+// ================= FILTRO DE NOTICIAS =================
+document.addEventListener("DOMContentLoaded", () => {
+    const filtros = document.querySelectorAll(".btn-filtro");
+    if (filtros.length === 0) return; // esta página no es noticias
+
+    const noticias = document.querySelectorAll(".noticia-item");
+    const mensaje = document.getElementById("sin-noticias");
+
+    filtros.forEach(boton => {
+        boton.addEventListener("click", () => {
+            const categoria = boton.dataset.categoria;
+            let visibles = 0;
+
+            filtros.forEach(b => b.classList.remove("active"));
+            boton.classList.add("active");
+
+            noticias.forEach(noticia => {
+                const mostrar = categoria === "todas" || noticia.dataset.categoria === categoria;
+                noticia.classList.toggle("d-none", !mostrar);
+                if (mostrar) visibles++;
+            });
+
+            if (mensaje) mensaje.classList.toggle("d-none", visibles !== 0);
+        });
+    });
 });
