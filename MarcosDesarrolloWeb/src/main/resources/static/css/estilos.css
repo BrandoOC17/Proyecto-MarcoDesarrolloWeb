@@ -486,16 +486,18 @@
 /*-----------------------------------*/
 
 @media (max-width: 992px) {
+
     /* Reduce la altura máxima de la imagen dentro del modal de administración */
     #modalDetalleProducto #modal-img {
-        max-height: 140px !important; 
+        max-height: 140px !important;
     }
-    
+
     /* Hace que los espacios internos del modal sean más compactos */
     #modalDetalleProducto .modal-body {
         padding: 1.25rem !important;
     }
-/* Hace que la tarjeta de la tabla ocupe absolutamente todo el ancho de su contenedor */
+
+    /* Hace que la tarjeta de la tabla ocupe absolutamente todo el ancho de su contenedor */
     .card {
         max-width: 100% !important;
         width: 100% !important;
@@ -1037,4 +1039,234 @@
 
 #carruselAccesorios .carousel-indicators .active {
     background-color: var(--color2);
+}
+
+/* ===== NOTICIAS ===== */
+#titulo-noticias {
+    padding-bottom: 10px;
+}
+
+#noticia-destacada {
+    background-color: var(--color3);
+}
+
+#noticias {
+    background-color: var(--color7);
+}
+
+#noticias-cta {
+    background-color: var(--color3);
+}
+
+.noticia-destacada {
+    border-radius: 14px;
+}
+
+.noticia-destacada-img {
+    background-color: var(--color8);
+    padding: 20px;
+}
+
+.noticia-destacada-img img {
+    max-height: 380px;
+    object-fit: contain;
+}
+
+.noticia-titulo-destacado {
+    font-family: var(--fuente2);
+    font-weight: 600;
+    color: var(--color1);
+}
+
+.noticia-card {
+    --bs-card-border-radius: 10px;
+    --bs-card-inner-border-radius: calc(10px - 1px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.noticia-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.noticia-card .noticia-img {
+    height: 180px;
+    object-fit: contain;
+    background-color: var(--color8);
+    padding: 10px;
+}
+
+.noticia-card .card-title {
+    font-family: var(--fuente2);
+    font-weight: 600;
+    color: var(--color1);
+}
+
+/* Sobrescribe el estilo azul y en negrita de ".card p" solo para los resúmenes */
+.noticia-card .noticia-resumen,
+.noticia-destacada .noticia-resumen {
+    color: #333;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.noticia-card .badge,
+.noticia-destacada .badge {
+    font-family: var(--fuente1);
+    color: var(--color3);
+    font-weight: 600;
+}
+
+/* Botones de filtro */
+.btn-filtro.active,
+.btn-filtro:hover {
+    background-color: var(--color2);
+    border-color: var(--color2);
+    color: var(--color3);
+}
+
+@media (max-width: 768px) {
+    .noticia-card .noticia-img {
+        height: 160px;
+    }
+
+    #filtros-noticias .btn {
+        width: auto;
+    }
+}
+
+
+/* Compras del usuario */
+
+.compras-titulo {
+    font-weight: 600;
+}
+
+.compra-card {
+    border: 1px solid #ced4da;
+    border-radius: 1rem;
+    background: #fff;
+    overflow: hidden;
+}
+
+.compra-header {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    padding: 1.1rem 1.5rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.compra-header:focus-visible {
+    outline: 2px solid var(--color1);
+    outline-offset: -4px;
+    border-radius: 1rem;
+}
+
+.compra-icono {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.compra-icono img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.compra-nombre {
+    color: var(--color1);
+    font-weight: 600;
+    min-width: 0;
+    flex: 1 1 220px;
+}
+
+.compra-dato {
+    white-space: nowrap;
+    color: #212529;
+}
+
+.compra-dato strong {
+    font-weight: 600;
+}
+
+.compra-chevron {
+    flex: 0 0 auto;
+    color: #6c757d;
+    transition: transform .25s ease;
+}
+
+.compra-header[aria-expanded="true"] .compra-chevron {
+    transform: rotate(180deg);
+}
+
+.compra-detalle {
+    border-top: 1px solid #e9ecef;
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: #fafafa;
+}
+
+.compra-detalle dt {
+    font-weight: 600;
+    color: #495057;
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.compra-detalle dd {
+    margin-bottom: 0;
+}
+
+.pagination .page-link {
+    color: #6c757d;
+    border-color: #e9ecef;
+    border-radius: .5rem !important;
+    margin: 0 .2rem;
+    min-width: 2.5rem;
+    text-align: center;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--color3);
+    border-color: var(--color1);
+    color: var(--color1);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ced4da;
+}
+
+@media (max-width: 767.98px) {
+    .compra-header {
+        flex-wrap: wrap;
+        gap: .5rem 1rem;
+        padding: 1rem;
+    }
+
+    .compra-nombre {
+        flex-basis: calc(100% - 120px);
+    }
+
+    .compra-chevron {
+        margin-left: auto;
+    }
+
+    .compra-dato {
+        flex-basis: 100%;
+        padding-left: 64px;
+    }
 }

@@ -216,24 +216,23 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
     const modalDetalle = document.getElementById('modalDetalleProducto');
 
-    modalDetalle.addEventListener('show.bs.modal', event => {
-        // Botón que activó el modal
-        const button = event.relatedTarget;
+    if (modalDetalle) {
+        modalDetalle.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
 
-        // Extraer la información de los atributos data-*
-        const nombre = button.getAttribute('data-nombre');
-        const precio = button.getAttribute('data-precio');
-        const tag = button.getAttribute('data-tag');
-        const cantidad = button.getAttribute('data-cantidad');
-        const img = button.getAttribute('data-img');
+            const nombre = button.getAttribute('data-nombre');
+            const precio = button.getAttribute('data-precio');
+            const tag = button.getAttribute('data-tag');
+            const cantidad = button.getAttribute('data-cantidad');
+            const img = button.getAttribute('data-img');
 
-        // Inyectar los datos dentro de los elementos del modal
-        modalDetalle.querySelector('#modal-nombre').textContent = nombre;
-        modalDetalle.querySelector('#modal-precio').textContent = precio + " c/u";
-        modalDetalle.querySelector('#modal-tag').textContent = tag;
-        modalDetalle.querySelector('#modal-cantidad').textContent = cantidad;
-        modalDetalle.querySelector('#modal-img').src = img;
-    });
+            modalDetalle.querySelector('#modal-nombre').textContent = nombre;
+            modalDetalle.querySelector('#modal-precio').textContent = precio + " c/u";
+            modalDetalle.querySelector('#modal-tag').textContent = tag;
+            modalDetalle.querySelector('#modal-cantidad').textContent = cantidad;
+            modalDetalle.querySelector('#modal-img').src = img;
+        });
+    }
 });
 
 
@@ -307,4 +306,146 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mensaje) mensaje.classList.toggle("d-none", visibles !== 0);
         });
     });
+});
+
+
+// ================= COMPRAS REALIZADAS =================
+const CLAVE_COMPRAS = "comprasRealizadas";
+
+function obtenerCompras() {
+    try {
+        return JSON.parse(localStorage.getItem(CLAVE_COMPRAS)) || [];
+    } catch (error) {
+        return [];
+    }
+}
+
+// Pasa lo que hay en el carrito al historial de compras y vacía el carrito
+function registrarCompra() {
+    const carrito = obtenerCarrito();
+    if (carrito.length === 0) return false;
+
+    const compras = obtenerCompras();
+    const fecha = new Date().toISOString();
+    const numeroPedido = String(Date.now()).slice(-8);
+
+    carrito.slice().reverse().forEach(j => {
+        compras.unshift({
+            numeroPedido: numeroPedido,
+            nombre: j.nombre,
+            imagen: j.imagen,
+            precio: j.precio,
+            cantidad: j.cantidad,
+            plataforma: j.plataforma,
+            fecha: fecha,
+            estado: "Pagado"
+        });
+    });
+
+    localStorage.setItem(CLAVE_COMPRAS, JSON.stringify(compras));
+    guardarCarrito([]);
+    actualizarContador();
+    return true;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnPagar = document.getElementById("btn-pagar");
+    if (!btnPagar) return; // esta página no es el carrito
+
+    btnPagar.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (registrarCompra()) {
+            window.location.href = "/compras";
+        }
+    });
+});
+
+
+
+// ================= LISTA Y PAGINACIÓN DE COMPRAS (página Mis compras) =================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const POR_PAGINA = 5;
+    const lista = document.getElementById("lista-compras");
+    const vacio = document.getElementById("sin-compras");
+    const pag = document.getElementById("paginacion-compras");
+    if (!lista) return;
+
+    const compras = obtenerCompras();
+
+    if (compras.length === 0) {
+        vacio.classList.remove("d-none");
+        return;
+    }
+
+    const totalPaginas = Math.ceil(compras.length / POR_PAGINA);
+
+    function formatoFecha(iso) {
+        const d = new Date(iso);
+        const dd = String(d.getDate()).padStart(2, "0");
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        return dd + "/" + mm + "/" + d.getFullYear();
+    }
+
+    function tarjeta(c, i) {
+        const icono = c.imagen
+            ? `<img src="${escaparHTML(c.imagen)}" alt="${escaparHTML(c.nombre)}">`
+            : `<i class="fa-solid fa-gamepad"></i>`;
+
+        return `
+                <div class="compra-card">
+                    <button class="compra-header" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#detalle-${i}" aria-expanded="false" aria-controls="detalle-${i}">
+                        <span class="compra-icono">${icono}</span>
+                        <span class="compra-nombre text-truncate" title="${escaparHTML(c.nombre)}">${escaparHTML(c.nombre)}</span>
+                        <span class="compra-dato"><strong>Fecha de compra:</strong> ${formatoFecha(c.fecha)}</span>
+                        <span class="compra-dato"><strong>Precio producto:</strong> ${formatoSoles(c.precio)}</span>
+                        <i class="fa-solid fa-chevron-down compra-chevron"></i>
+                    </button>
+                    <div class="collapse" id="detalle-${i}">
+                        <div class="compra-detalle">
+                            <dl class="row g-3 mb-3">
+                                <div class="col-6 col-md-3"><dt>N.º de pedido</dt><dd>${escaparHTML(c.numeroPedido)}</dd></div>
+                                <div class="col-6 col-md-3"><dt>Plataforma</dt><dd>${escaparHTML(c.plataforma || "-")}</dd></div>
+                                <div class="col-6 col-md-3"><dt>Cantidad</dt><dd>${c.cantidad}</dd></div>
+                                <div class="col-6 col-md-3"><dt>Estado</dt><dd><span class="badge rounded-pill text-bg-success">${escaparHTML(c.estado)}</span></dd></div>
+                            </dl>
+                            <p class="mb-0 fw-semibold">Total pagado: ${formatoSoles(c.precio * c.cantidad)}</p>
+                        </div>
+                    </div>
+                </div>`;
+    }
+
+    function boton(contenido, pagina, deshabilitado, activo, etiqueta) {
+        const li = document.createElement("li");
+        li.className = "page-item" + (deshabilitado ? " disabled" : "") + (activo ? " active" : "");
+        const a = document.createElement("a");
+        a.className = "page-link";
+        a.href = "#";
+        a.innerHTML = contenido;
+        if (etiqueta) a.setAttribute("aria-label", etiqueta);
+        a.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!deshabilitado) mostrar(pagina);
+        });
+        li.appendChild(a);
+        return li;
+    }
+
+    function mostrar(pagina) {
+        const inicio = (pagina - 1) * POR_PAGINA;
+        lista.innerHTML = compras
+            .slice(inicio, inicio + POR_PAGINA)
+            .map((c, i) => tarjeta(c, inicio + i))
+            .join("");
+
+        pag.innerHTML = "";
+        pag.appendChild(boton('<i class="fa-solid fa-chevron-left"></i>', pagina - 1, pagina === 1, false, "Anterior"));
+        for (let p = 1; p <= totalPaginas; p++) {
+            pag.appendChild(boton(p, p, false, p === pagina));
+        }
+        pag.appendChild(boton('<i class="fa-solid fa-chevron-right"></i>', pagina + 1, pagina === totalPaginas, false, "Siguiente"));
+    }
+
+    mostrar(1);
 });
