@@ -76,12 +76,11 @@
     		<artifactId>spring-security-crypto</artifactId>
 		</dependency>
 
-		<!--SPRING DOTENV OSEA ESTO HACE QUE SE PUEDAN USAR VARIABLES DE ENTORNO EN LA APLICACIÓN-->
-		<!--VARIABLES DE ENTORNO POR EJEMPLO ES DATABASE_URL O EN ESTE CASO USUARIO Y CONTRASEÑA-->
+		<!-- Carga variables del archivo .env en Spring Boot 4 durante el desarrollo. -->
 		<dependency>
     		<groupId>me.paulschwarz</groupId>
-    		<artifactId>spring-dotenv</artifactId>
-    		<version>4.0.0</version>
+    		<artifactId>springboot4-dotenv</artifactId>
+    		<version>5.1.0</version>
 		</dependency>
 
     </dependencies>
