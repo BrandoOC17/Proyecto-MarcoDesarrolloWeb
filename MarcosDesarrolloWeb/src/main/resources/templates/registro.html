@@ -46,16 +46,11 @@
     <main>
 
         <section id="registro" class="py-5">
-
             <div class="container">
-
                 <div class="row align-items-center justify-content-center g-5">
-
                     <!-- PRESENTACIÓN -->
                     <div class="col-12 col-lg-6 text-center">
-
                         <i class="fa-brands fa-playstation fa-4x mt-3"></i>
-
                         <h1 class="display-4 fw-bold">
                             Infinity Station
                         </h1>
@@ -69,165 +64,112 @@
                             tienda de videojuegos y disfrutar de
                             todo lo que tenemos para ti.
                         </p>
-
                     </div>
-
 
                     <!-- FORMULARIO -->
                     <div class="col-12 col-md-8 col-lg-5">
-
                         <div class="card shadow-sm border-0">
-
                             <div class="card-body p-4 p-md-5">
-
                                 <h3 class="text-center mb-4">
                                     Crea tu cuenta
                                 </h3>
 
                                 <!-- FORMULARIO CON THYMELEAF -->
-                                <form th:action="@{/registro}" method="post">
-
+                                <form th:action="@{/registro}" method="post" th:object="${registroForm}">
                                     <!-- NOMBRE -->
                                     <div class="mb-3">
-
                                         <label for="nombre" class="form-label">
-
                                             Nombre completo
-
                                         </label>
-
                                         <div class="input-group">
-
                                             <span class="input-group-text">
-
                                                 <i class="fa-regular fa-user"></i>
-
                                             </span>
-
-                                            <input type="text" class="form-control" id="nombre" name="nombre"
-                                                placeholder="Ingresa tu nombre" required>
-
+                                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                                placeholder="Ej. Ana María García" required>
                                         </div>
-
+                                        <small class="text-danger" th:if="${#fields.hasErrors('nombre')}"
+                                            th:errors="*{nombre}"></small>
                                     </div>
 
 
                                     <!-- CORREO -->
                                     <div class="mb-3">
-
                                         <label for="correo" class="form-label">
-
                                             Correo electrónico
-
                                         </label>
-
                                         <div class="input-group">
-
                                             <span class="input-group-text">
-
                                                 <i class="fa-regular fa-envelope"></i>
-
                                             </span>
-
-                                            <input type="email" class="form-control" id="correo" name="correo"
+                                            <input type="email" class="form-control" id="correo" th:field="*{correo}"
                                                 placeholder="Ingresa tu correo" required>
-
                                         </div>
-
+                                        <small class="text-danger" th:if="${#fields.hasErrors('correo')}"
+                                            th:errors="*{correo}"></small>
                                     </div>
 
 
                                     <!-- CREAR CONTRASEÑA -->
                                     <div class="mb-3">
-
                                         <label for="password" class="form-label">
-
                                             Crear contraseña
-
                                         </label>
-
                                         <div class="input-group">
-
                                             <span class="input-group-text">
-
                                                 <i class="fa-solid fa-lock"></i>
-
                                             </span>
-
                                             <input type="password" class="form-control" id="password" name="password"
+                                                th:classappend="${#fields.hasErrors('password')} ? ' is-invalid' : ''"
                                                 placeholder="Crea una contraseña" required>
-
                                         </div>
-
+                                        <small class="text-danger" th:if="${#fields.hasErrors('password')}"
+                                            th:errors="*{password}"></small>
                                     </div>
 
 
                                     <!-- CONFIRMAR CONTRASEÑA -->
                                     <div class="mb-4">
-
                                         <label for="confirmPassword" class="form-label">
-
                                             Confirmar contraseña
-
                                         </label>
-
                                         <div class="input-group">
-
                                             <span class="input-group-text">
-
                                                 <i class="fa-solid fa-lock"></i>
-
                                             </span>
-
                                             <input type="password" class="form-control" id="confirmPassword"
-                                                name="confirmPassword" placeholder="Confirma tu contraseña" required>
-
+                                                name="confirmPassword"
+                                                th:classappend="${#fields.hasErrors('confirmPassword')} ? ' is-invalid' : ''"
+                                                placeholder="Confirma tu contraseña" required>
                                         </div>
-
+                                        <small class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}"
+                                            th:errors="*{confirmPassword}"></small>
                                     </div>
 
 
                                     <!-- BOTÓN -->
                                     <div class="d-grid">
-
                                         <button type="submit" class="btn btn-primary btn-lg fw-bold enlace-azul">
-
                                             Crear cuenta
-
                                         </button>
-
                                     </div>
-
                                 </form>
-
                             </div>
 
 
                             <!-- INICIAR SESIÓN -->
                             <div class="card-footer text-center py-4">
-
                                 <p class="fw-bold mb-2 text-dark">
-
                                     ¿Ya tienes una cuenta?
-
                                 </p>
-
                                 <a th:href="@{/login}" class="fw-bold text-decoration-none">
-
                                     Iniciar sesión
-
                                 </a>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </section>
 
     </main>

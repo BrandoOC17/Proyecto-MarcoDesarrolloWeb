@@ -1,54 +1,51 @@
 package com.infinitystation.MarcosDesarrolloWeb.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cliente;
-    private String producto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idusuario", nullable = false)
+    private Usuario usuario;
+
+    @Column(name = "total", nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
+
+    @Column(name = "estado", nullable = false, length = 50)
     private String estado;
-    private String plataforma;
-    private int cantidad;
-    private String imagen;
+
+    @Column(name = "fecha_pedido", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime fechaPedido;
+
+    @OneToMany(mappedBy = "pedido")
+    private List<DetallePedido> detalles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pedido")
+    private Set<Pago> pagos = new LinkedHashSet<>();
 
     public Pedido() {
-    }
-
-    public Pedido(
-            Long id,
-            String cliente,
-            String producto,
-            BigDecimal total,
-            String estado,
-            String plataforma,
-            int cantidad,
-            String imagen) {
-
-        this.id = id;
-        this.cliente = cliente;
-        this.producto = producto;
-        this.total = total;
-        this.estado = estado;
-        this.plataforma = plataforma;
-        this.cantidad = cantidad;
-        this.imagen = imagen;
-    }
-
-    public Pedido(
-            String cliente,
-            String producto,
-            BigDecimal total,
-            String estado) {
-
-        this.cliente = cliente;
-        this.producto = producto;
-        this.total = total;
-        this.estado = estado;
-        this.plataforma = "PS5";
-        this.cantidad = 1;
-        this.imagen = "";
     }
 
     public Long getId() {
@@ -59,20 +56,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public String getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
-
-    public String getProducto() {
-        return producto;
-    }
-
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public BigDecimal getTotal() {
@@ -91,27 +80,44 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public String getPlataforma() {
-        return plataforma;
+    public LocalDateTime getFechaPedido() {
+        return fechaPedido;
     }
 
-    public void setPlataforma(String plataforma) {
-        this.plataforma = plataforma;
+    public List<DetallePedido> getDetalles() {
+        return detalles;
+    }
+
+    public Set<Pago> getPagos() {
+        return pagos;
+    }
+
+    public String getCliente() {
+        return usuario == null ? "" : usuario.getNombre();
+    }
+
+    public String getProducto() {
+        DetallePedido detalle = primerDetalle();
+        return detalle == null ? "" : detalle.getProducto().getNombre();
+    }
+
+    public String getPlataforma() {
+        DetallePedido detalle = primerDetalle();
+        return detalle == null ? "" : detalle.getProducto().getPlataforma();
     }
 
     public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+        return detalles.stream()
+                .mapToInt(DetallePedido::getCantidad)
+                .sum();
     }
 
     public String getImagen() {
-        return imagen;
+        DetallePedido detalle = primerDetalle();
+        return detalle == null ? "" : detalle.getProducto().getImagen();
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    private DetallePedido primerDetalle() {
+        return detalles.isEmpty() ? null : detalles.get(0);
     }
 }

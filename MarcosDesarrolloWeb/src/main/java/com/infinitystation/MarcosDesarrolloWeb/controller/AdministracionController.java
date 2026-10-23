@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AdministracionController {
 
@@ -20,7 +22,10 @@ public class AdministracionController {
     }
 
     @GetMapping("/administracion")
-    public String administracion(Model model) {
+    public String administracion(Model model, HttpSession session) {
+        if (!Boolean.TRUE.equals(session.getAttribute("esAdministrador"))) {
+            return "redirect:/login";
+        }
 
         // Obtener todos los pedidos
         List<Pedido> pedidos = pedidoService.listarPedidos();

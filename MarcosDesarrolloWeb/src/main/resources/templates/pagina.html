@@ -192,14 +192,16 @@
                                     God of War Ragnarok
                                 </h5>
 
-                                <p class="card-text">
+                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['God of War Ragnarok'].precio}">
                                     S/ 150.99
                                 </p>
 
                                 <div class="d-flex justify-content-end">
 
-                                    <button class="btn btn-outline-secondary btn-agregar" data-id="gow-ragnarok"
-                                        data-precio="150.99" data-plataforma="PS5" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-secondary btn-agregar"
+                                        th:data-id="${productosPorNombre['God of War Ragnarok'].id}"
+                                        th:data-precio="${productosPorNombre['God of War Ragnarok'].precio}"
+                                        data-plataforma="PS5" data-bs-toggle="modal"
                                         data-bs-target="#cartModal">
 
                                         Agregar al carro
@@ -229,14 +231,16 @@
                                     Call of Duty: Black OPS III
                                 </h5>
 
-                                <p class="card-text">
+                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['Call of Duty: Black OPS III'].precio}">
                                     S/ 89.99
                                 </p>
 
                                 <div class="d-flex justify-content-end">
 
-                                    <button class="btn btn-outline-secondary btn-agregar" data-id="cod-bo3"
-                                        data-precio="89.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-secondary btn-agregar"
+                                        th:data-id="${productosPorNombre['Call of Duty: Black OPS III'].id}"
+                                        th:data-precio="${productosPorNombre['Call of Duty: Black OPS III'].precio}"
+                                        data-plataforma="PS4" data-bs-toggle="modal"
                                         data-bs-target="#cartModal">
 
                                         Agregar al carro
@@ -266,14 +270,16 @@
                                     The Last of Us Part II
                                 </h5>
 
-                                <p class="card-text">
+                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['The Last of Us Part II'].precio}">
                                     S/ 179.99
                                 </p>
 
                                 <div class="d-flex justify-content-end">
 
-                                    <button class="btn btn-outline-secondary btn-agregar" data-id="tlou2"
-                                        data-precio="179.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-secondary btn-agregar"
+                                        th:data-id="${productosPorNombre['The Last of Us Part II'].id}"
+                                        th:data-precio="${productosPorNombre['The Last of Us Part II'].precio}"
+                                        data-plataforma="PS4" data-bs-toggle="modal"
                                         data-bs-target="#cartModal">
 
                                         Agregar al carro
@@ -302,14 +308,16 @@
                                     Gran Turismo 7
                                 </h5>
 
-                                <p class="card-text">
+                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['Gran Turismo 7'].precio}">
                                     S/ 165.99
                                 </p>
 
                                 <div class="d-flex justify-content-end">
 
-                                    <button class="btn btn-outline-secondary btn-agregar" data-id="gt7"
-                                        data-precio="165.99" data-plataforma="PS4" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-secondary btn-agregar"
+                                        th:data-id="${productosPorNombre['Gran Turismo 7'].id}"
+                                        th:data-precio="${productosPorNombre['Gran Turismo 7'].precio}"
+                                        data-plataforma="PS4" data-bs-toggle="modal"
                                         data-bs-target="#cartModal">
 
                                         Agregar al carro
@@ -361,25 +369,16 @@
 
 
                 <div id="carruselAccesorios" class="carousel carousel-dark slide mt-4">
-
-
                     <div class="position-relative px-5">
-
                         <div class="carousel-inner">
-
-
                             <!-- 1. PS5 -->
                             <div class="carousel-item active">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-
                                     <div class="texto-slide text-center text-md-start">
-
                                         <h3>
                                             Consola PlayStation 5
                                         </h3>
-
                                         <p class="text-muted">
                                             Juega la nueva generación con gráficos
                                             rápidos y tiempos de carga mínimos.
@@ -557,197 +556,140 @@
 
                             <!-- 5. PULSE EXPLORE -->
                             <div class="carousel-item">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-
                                     <div class="texto-slide text-center text-md-start">
-
                                         <h3>
                                             Audífonos inalámbricos PULSE Explore
                                         </h3>
-
                                         <p class="text-muted">
                                             Disfruta de un sonido de juego hiperrealista
                                             dondequiera que juegues gracias al diseño portátil,
                                             los micrófonos ocultos integrados y el estuche de carga complementario.
                                         </p>
-
                                         <div
                                             class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
-
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 749.00
                                             </span>
-
                                             <button class="btn btn-outline-secondary btn-agregar"
                                                 data-id="pulse-explore"
                                                 data-nombre="Audífonos inalámbricos PULSE Explore"
                                                 th:attr="data-imagen=@{/img/auriculares_inalambrico_PulseExplore.png}"
                                                 data-precio="749.00" data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
-
                                     </div>
-
                                     <img class="img-fluid slide-img"
                                         th:src="@{/img/auriculares_inalambrico_PulseExplore.png}"
                                         alt="Audífonos PULSE Explore">
-
                                 </div>
-
                             </div>
 
 
                             <!-- 6. DUALSENSE EDGE -->
                             <div class="carousel-item">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-
                                     <div class="texto-slide text-center text-md-start">
-
                                         <h3>
                                             Control inalámbrico DualSense Edge
                                         </h3>
-
                                         <p class="text-muted">
                                             Deja tu marca en el juego con botones reasignables,
                                             gatillos y joysticks ajustables, tapas de joystick
                                             intercambiables, botones traseros y más.
                                         </p>
-
                                         <div
                                             class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
-
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 899.00
                                             </span>
-
                                             <button class="btn btn-outline-secondary btn-agregar"
                                                 data-id="dualsense-edge" data-nombre="Control DualSense Edge"
                                                 th:attr="data-imagen=@{/img/control_inalambrico_Edge.png}"
                                                 data-precio="899.00" data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
-
                                     </div>
-
                                     <img class="img-fluid slide-img" th:src="@{/img/control_inalambrico_Edge.png}"
                                         alt="Control DualSense Edge">
-
                                 </div>
-
                             </div>
 
 
                             <!-- 7. ACCESS -->
                             <div class="carousel-item">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-
                                     <div class="texto-slide text-center text-md-start">
-
                                         <h3>
                                             Control Access
                                         </h3>
-
                                         <p class="text-muted">
                                             Un kit de control de PlayStation®5
                                             altamente personalizable, diseñado para
                                             hacer que los juegos sean más accesibles.
                                         </p>
-
                                         <div
                                             class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
-
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 359.00
                                             </span>
-
                                             <button class="btn btn-outline-secondary btn-agregar" data-id="access"
                                                 data-nombre="Control Access"
                                                 th:attr="data-imagen=@{/img/control_access.png}" data-precio="359.00"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
-
                                     </div>
-
                                     <img class="img-fluid slide-img" th:src="@{/img/control_access.png}"
                                         alt="Control Access">
-
                                 </div>
-
                             </div>
 
 
                             <!-- 8. CONTROL MULTIMEDIA -->
                             <div class="carousel-item">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-
                                     <div class="texto-slide text-center text-md-start">
-
                                         <h3>
                                             Control multimedia
                                         </h3>
-
                                         <p class="text-muted">
                                             Controla cómodamente las películas,
                                             los servicios de transmisión y mucho más
                                             en tu consola PS5 gracias a un diseño intuitivo.
                                         </p>
-
                                         <div
                                             class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
-
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 59.99
                                             </span>
-
                                             <button class="btn btn-outline-secondary btn-agregar"
                                                 data-id="control-multimedia" data-nombre="Control multimedia"
                                                 th:attr="data-imagen=@{/img/control_multimedia.png}" data-precio="59.99"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
-
                                     </div>
-
                                     <img class="img-fluid slide-img" th:src="@{/img/control_multimedia.png}"
                                         alt="Control multimedia">
-
                                 </div>
-
                             </div>
 
 
                             <!-- 9. CÁMARA HD -->
                             <div class="carousel-item">
-
                                 <div
                                     class="slide-accesorio d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
 

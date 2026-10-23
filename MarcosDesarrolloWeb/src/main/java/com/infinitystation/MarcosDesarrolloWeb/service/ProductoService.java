@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.infinitystation.MarcosDesarrolloWeb.model.DetallePedido;
 import com.infinitystation.MarcosDesarrolloWeb.model.Producto;
+import com.infinitystation.MarcosDesarrolloWeb.repository.DetallePedidoRepository;
 import com.infinitystation.MarcosDesarrolloWeb.repository.ProductoRepository;
 
 @Service
@@ -13,9 +15,13 @@ public class ProductoService {
 
         // Permite acceder a los productos almacenados en MySQL.
         private final ProductoRepository productoRepository;
+        private final DetallePedidoRepository detallePedidoRepository;
 
-        public ProductoService(ProductoRepository productoRepository) {
+        public ProductoService(
+                ProductoRepository productoRepository,
+                DetallePedidoRepository detallePedidoRepository) {
                 this.productoRepository = productoRepository;
+                this.detallePedidoRepository = detallePedidoRepository;
 
                 // Registra los productos iniciales solo si la tabla está vacía.
                 if (productoRepository.count() == 0) {
@@ -109,4 +115,18 @@ public class ProductoService {
         public Producto buscarPorId(Long id) {
                 return productoRepository.findById(id).orElse(null);
         }
+
+        // Guarda un producto nuevo o actualiza uno existente.
+        public Producto guardarProducto(Producto producto) {
+                return productoRepository.save(producto);
         }
+
+        // Evita eliminar productos que ya aparecen en detalles de pedidos.
+        public boolean eliminarProducto(Long id) {
+                if (detallePedidoRepository.existsByProducto_Id(id)) {
+                        return false;
+                }
+                productoRepository.deleteById(id);
+                return true;
+        }
+}

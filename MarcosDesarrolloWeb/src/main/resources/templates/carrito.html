@@ -188,6 +188,10 @@
 
                 <div class="modal-body pt-3">
                     <p class="text-muted mb-4">Selecciona uno de los medios de pago para continuar con tu pedido.</p>
+                    <div id="error-pago" class="alert alert-danger d-none" role="alert">
+                        <span id="mensaje-error-pago"></span>
+                        <a th:href="@{/login}" class="alert-link ms-1 d-none">Iniciar sesión</a>
+                    </div>
 
                     <div id="opciones-pago" class="row g-3">
                         <div class="col-md-6">

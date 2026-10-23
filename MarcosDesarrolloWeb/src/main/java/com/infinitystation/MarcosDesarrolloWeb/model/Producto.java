@@ -1,5 +1,11 @@
 package com.infinitystation.MarcosDesarrolloWeb.model;
 
+import java.math.BigDecimal;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 // Importa la anotación que indica que la clase será una entidad gestionada por JPA.
 import jakarta.persistence.Entity;
 // Importa la anotación que identifica la clave primaria de la entidad, nombre tabla y relacion atributo columna.
@@ -17,26 +23,35 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, length = 150)
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(max = 150, message = "El nombre no puede superar 150 caracteres.")
     private String nombre;
 
-    @Column(name = "precio", nullable = false)
-    private double precio;
+    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "El precio es obligatorio.")
+    @Positive(message = "El precio debe ser mayor que cero.")
+    private BigDecimal precio;
 
-    @Column(name = "plataforma")
+    @Column(name = "plataforma", length = 50)
+    @Size(max = 50, message = "La plataforma no puede superar 50 caracteres.")
     private String plataforma;
 
-    @Column(name = "imagen")
+    @Column(name = "imagen", columnDefinition = "TEXT")
     private String imagen;
 
     public Producto() {
     }
 
-    public Producto(String nombre, double precio, String plataforma, String imagen) {
+    public Producto(String nombre, BigDecimal precio, String plataforma, String imagen) {
         this.nombre = nombre;
         this.precio = precio;
         this.plataforma = plataforma;
         this.imagen = imagen;
+    }
+
+    public Producto(String nombre, double precio, String plataforma, String imagen) {
+        this(nombre, BigDecimal.valueOf(precio), plataforma, imagen);
     }
 
     public Long getId() {
@@ -55,11 +70,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 

@@ -43,15 +43,23 @@
                         </a>
                     </li>
 
-                    <li class="nav-item mx-3">
+                    <li class="nav-item mx-3"
+                        th:if="${session.usuarioId == null and session.esAdministrador != true}">
                         <a class="nav-link active" th:href="@{/login}">
                             Iniciar sesión
                         </a>
                     </li>
 
-                    <li class="nav-item mx-3">
+                    <li class="nav-item mx-3"
+                        th:if="${session.usuarioId == null and session.esAdministrador != true}">
                         <a class="nav-link active" th:href="@{/registro}">
                             Registro
+                        </a>
+                    </li>
+
+                    <li class="nav-item mx-3" th:if="${session.esAdministrador == true}">
+                        <a class="nav-link active" th:href="@{/administracion}">
+                            Administración
                         </a>
                     </li>
 
@@ -68,10 +76,17 @@
                         </a>
                     </li>
 
-                    <li class="nav-item mx-3">
+                    <li class="nav-item mx-3" th:if="${session.usuarioId != null}">
                         <a class="nav-link active" th:href="@{/compras}">
                             Mis compras
                             <i class="fa-solid fa-user ms-1"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mx-3"
+                        th:if="${session.usuarioId != null or session.esAdministrador == true}">
+                        <a class="nav-link active" th:href="@{/salir}">
+                            Salir
                         </a>
                     </li>
                 </ul>

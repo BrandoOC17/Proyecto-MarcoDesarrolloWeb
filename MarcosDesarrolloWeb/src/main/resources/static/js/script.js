@@ -63,6 +63,10 @@ function agregarAlCarrito(boton) {
     const tarjeta = boton.closest(".card");
     const carrito = obtenerCarrito();
     const id = boton.dataset.id;
+    if (!/^[0-9]+$/.test(id || "")) {
+        window.alert("Este artículo todavía no está registrado en el catálogo de la tienda.");
+        return;
+    }
     const existente = carrito.find(j => j.id === id);
 
     if (existente) {
@@ -310,43 +314,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ================= COMPRAS REALIZADAS =================
-const CLAVE_COMPRAS = "comprasRealizadas";
-
-function obtenerCompras() {
-    try {
-        return JSON.parse(localStorage.getItem(CLAVE_COMPRAS)) || [];
-    } catch (error) {
-        return [];
-    }
-}
-
-// Pasa lo que hay en el carrito al historial de compras y vacía el carrito
-function registrarCompra(metodoPago) {
+async function registrarCompra(metodoPago) {
     const carrito = obtenerCarrito();
     if (carrito.length === 0) return null;
 
-    const compras = obtenerCompras();
-    const fecha = new Date().toISOString();
-    const numeroPedido = String(Date.now()).slice(-8);
+    let confirmacionId = sessionStorage.getItem("confirmacionCompra");
+    if (!confirmacionId) {
+        confirmacionId = window.crypto && window.crypto.randomUUID
+            ? window.crypto.randomUUID()
+            : Date.now() + "-" + Math.random().toString(36).slice(2);
+        sessionStorage.setItem("confirmacionCompra", confirmacionId);
+    }
 
-    carrito.slice().reverse().forEach(j => {
-        compras.unshift({
-            numeroPedido: numeroPedido,
-            nombre: j.nombre,
-            imagen: j.imagen,
-            precio: j.precio,
-            cantidad: j.cantidad,
-            plataforma: j.plataforma,
-            fecha: fecha,
-            estado: "Demostración local",
-            metodoPago: metodoPago
-        });
+    const respuesta = await fetch("/compras/confirmar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({
+            metodoPago: metodoPago,
+            confirmacionId: confirmacionId,
+            productos: carrito.map(j => ({
+                productoId: Number(j.id),
+                cantidad: Number(j.cantidad)
+            }))
+        })
     });
 
-    localStorage.setItem(CLAVE_COMPRAS, JSON.stringify(compras));
+    let resultado = {};
+    try {
+        resultado = await respuesta.json();
+    } catch (error) {
+        resultado = {};
+    }
+    if (!respuesta.ok) {
+        const error = new Error(resultado.error || "No se pudo registrar la compra. Inténtalo de nuevo.");
+        error.status = respuesta.status;
+        throw error;
+    }
+
     guardarCarrito([]);
     actualizarContador();
-    return numeroPedido;
+    sessionStorage.removeItem("confirmacionCompra");
+    return resultado;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -360,22 +369,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const panelTarjeta = document.getElementById("pago-tarjeta");
     const panelConfirmado = document.getElementById("pago-confirmado");
     const formularioTarjeta = document.getElementById("formulario-tarjeta");
-    const total = document.getElementById("resumen-subtotal").textContent;
-    document.getElementById("total-pago-yape").textContent = "Total: " + total;
-    document.getElementById("total-pago-tarjeta").textContent = "Total: " + total;
+    const alertaError = document.getElementById("error-pago");
+    const mensajeError = document.getElementById("mensaje-error-pago");
+    const enlaceLogin = alertaError.querySelector("a");
+    let enviando = false;
 
-    function mostrarConfirmacion(metodoPago) {
-        if (!registrarCompra(metodoPago)) return;
+    async function mostrarConfirmacion(metodoPago) {
+        if (enviando) return;
+        enviando = true;
+        alertaError.classList.add("d-none");
+        modalElemento.querySelectorAll("[data-confirmar-pago], #formulario-tarjeta button[type='submit']")
+            .forEach(boton => boton.disabled = true);
 
-        opcionesPago.classList.add("d-none");
-        panelYape.classList.add("d-none");
-        panelTarjeta.classList.add("d-none");
-        panelConfirmado.classList.remove("d-none");
-        document.getElementById("mensaje-pago-confirmado").textContent =
-            "En una compra real, tu pedido y el comprobante se enviarían al correo registrado en un plazo máximo de 3 días. Esta demostración es local: no se realizó ningún cobro ni se envió un correo.";
+        try {
+            const compra = await registrarCompra(metodoPago);
+            if (!compra) throw new Error("El carrito está vacío.");
+            opcionesPago.classList.add("d-none");
+            panelYape.classList.add("d-none");
+            panelTarjeta.classList.add("d-none");
+            panelConfirmado.classList.remove("d-none");
+            document.getElementById("mensaje-pago-confirmado").textContent =
+                "Tu pedido #" + compra.pedidoId + " fue registrado por " + formatoSoles(Number(compra.total))
+                + ". En un proceso real, el comprobante se enviaría al correo registrado en un plazo máximo de 3 días. "
+                + "Esta demostración no realiza cobros ni envía correos.";
+        } catch (error) {
+            mensajeError.textContent = error.message;
+            enlaceLogin.classList.toggle("d-none", error.status !== 401);
+            alertaError.classList.remove("d-none");
+        } finally {
+            enviando = false;
+            modalElemento.querySelectorAll("[data-confirmar-pago], #formulario-tarjeta button[type='submit']")
+                .forEach(boton => boton.disabled = false);
+        }
     }
 
     btnPagar.addEventListener("click", () => {
+        const total = document.getElementById("resumen-subtotal").textContent;
+        document.getElementById("total-pago-yape").textContent = "Total: " + total;
+        document.getElementById("total-pago-tarjeta").textContent = "Total: " + total;
+        alertaError.classList.add("d-none");
         opcionesPago.classList.remove("d-none");
         panelYape.classList.add("d-none");
         panelTarjeta.classList.add("d-none");
@@ -410,7 +442,6 @@ document.addEventListener("DOMContentLoaded", () => {
         formularioTarjeta.classList.add("was-validated");
         if (formularioTarjeta.checkValidity()) {
             mostrarConfirmacion("Tarjeta");
-            formularioTarjeta.reset();
         }
     });
 
@@ -419,7 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
         formularioTarjeta.classList.remove("was-validated");
     });
 });
-
 
 
 // ================= LISTA Y PAGINACIÓN DE COMPRAS (página Mis compras) =================
@@ -431,51 +461,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const pag = document.getElementById("paginacion-compras");
     if (!lista) return;
 
-    const compras = obtenerCompras();
+    const compras = Array.from(lista.querySelectorAll(".compra-card"));
 
     if (compras.length === 0) {
         vacio.classList.remove("d-none");
         return;
     }
 
+    vacio.classList.add("d-none");
     const totalPaginas = Math.ceil(compras.length / POR_PAGINA);
-
-    function formatoFecha(iso) {
-        const d = new Date(iso);
-        const dd = String(d.getDate()).padStart(2, "0");
-        const mm = String(d.getMonth() + 1).padStart(2, "0");
-        return dd + "/" + mm + "/" + d.getFullYear();
-    }
-
-    function tarjeta(c, i) {
-        const icono = c.imagen
-            ? `<img src="${escaparHTML(c.imagen)}" alt="${escaparHTML(c.nombre)}">`
-            : `<i class="fa-solid fa-gamepad"></i>`;
-
-        return `
-                <div class="compra-card">
-                    <button class="compra-header" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#detalle-${i}" aria-expanded="false" aria-controls="detalle-${i}">
-                        <span class="compra-icono">${icono}</span>
-                        <span class="compra-nombre text-truncate" title="${escaparHTML(c.nombre)}">${escaparHTML(c.nombre)}</span>
-                        <span class="compra-dato"><strong>Fecha de compra:</strong> ${formatoFecha(c.fecha)}</span>
-                        <span class="compra-dato"><strong>Precio producto:</strong> ${formatoSoles(c.precio)}</span>
-                        <i class="fa-solid fa-chevron-down compra-chevron"></i>
-                    </button>
-                    <div class="collapse" id="detalle-${i}">
-                        <div class="compra-detalle">
-                            <dl class="row g-3 mb-3">
-                                <div class="col-6 col-md-3"><dt>N.º de pedido</dt><dd>${escaparHTML(c.numeroPedido)}</dd></div>
-                                <div class="col-6 col-md-3"><dt>Plataforma</dt><dd>${escaparHTML(c.plataforma || "-")}</dd></div>
-                                <div class="col-6 col-md-3"><dt>Cantidad</dt><dd>${c.cantidad}</dd></div>
-                                <div class="col-6 col-md-3"><dt>Método de pago</dt><dd>${escaparHTML(c.metodoPago || "-")}</dd></div>
-                                <div class="col-6 col-md-3"><dt>Estado</dt><dd><span class="badge rounded-pill ${c.estado === "Demostración local" ? "text-bg-info" : "text-bg-success"}">${escaparHTML(c.estado)}</span></dd></div>
-                            </dl>
-                            <p class="mb-0 fw-semibold">Total pagado: ${formatoSoles(c.precio * c.cantidad)}</p>
-                        </div>
-                    </div>
-                </div>`;
-    }
 
     function boton(contenido, pagina, deshabilitado, activo, etiqueta) {
         const li = document.createElement("li");
@@ -495,10 +489,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function mostrar(pagina) {
         const inicio = (pagina - 1) * POR_PAGINA;
-        lista.innerHTML = compras
-            .slice(inicio, inicio + POR_PAGINA)
-            .map((c, i) => tarjeta(c, inicio + i))
-            .join("");
+        compras.forEach((compra, indice) => {
+            compra.classList.toggle("d-none", indice < inicio || indice >= inicio + POR_PAGINA);
+        });
 
         pag.innerHTML = "";
         pag.appendChild(boton('<i class="fa-solid fa-chevron-left"></i>', pagina - 1, pagina === 1, false, "Anterior"));
