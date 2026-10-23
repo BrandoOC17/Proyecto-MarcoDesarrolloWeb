@@ -192,7 +192,8 @@
                                     God of War Ragnarok
                                 </h5>
 
-                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['God of War Ragnarok'].precio}">
+                                <p class="card-text"
+                                    th:text="'S/ ' + ${productosPorNombre['God of War Ragnarok'].precio}">
                                     S/ 150.99
                                 </p>
 
@@ -201,8 +202,7 @@
                                     <button class="btn btn-outline-secondary btn-agregar"
                                         th:data-id="${productosPorNombre['God of War Ragnarok'].id}"
                                         th:data-precio="${productosPorNombre['God of War Ragnarok'].precio}"
-                                        data-plataforma="PS5" data-bs-toggle="modal"
-                                        data-bs-target="#cartModal">
+                                        data-plataforma="PS5" data-bs-toggle="modal" data-bs-target="#cartModal">
 
                                         Agregar al carro
 
@@ -231,7 +231,8 @@
                                     Call of Duty: Black OPS III
                                 </h5>
 
-                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['Call of Duty: Black OPS III'].precio}">
+                                <p class="card-text"
+                                    th:text="'S/ ' + ${productosPorNombre['Call of Duty: Black OPS III'].precio}">
                                     S/ 89.99
                                 </p>
 
@@ -240,8 +241,7 @@
                                     <button class="btn btn-outline-secondary btn-agregar"
                                         th:data-id="${productosPorNombre['Call of Duty: Black OPS III'].id}"
                                         th:data-precio="${productosPorNombre['Call of Duty: Black OPS III'].precio}"
-                                        data-plataforma="PS4" data-bs-toggle="modal"
-                                        data-bs-target="#cartModal">
+                                        data-plataforma="PS4" data-bs-toggle="modal" data-bs-target="#cartModal">
 
                                         Agregar al carro
 
@@ -270,7 +270,8 @@
                                     The Last of Us Part II
                                 </h5>
 
-                                <p class="card-text" th:text="'S/ ' + ${productosPorNombre['The Last of Us Part II'].precio}">
+                                <p class="card-text"
+                                    th:text="'S/ ' + ${productosPorNombre['The Last of Us Part II'].precio}">
                                     S/ 179.99
                                 </p>
 
@@ -279,8 +280,7 @@
                                     <button class="btn btn-outline-secondary btn-agregar"
                                         th:data-id="${productosPorNombre['The Last of Us Part II'].id}"
                                         th:data-precio="${productosPorNombre['The Last of Us Part II'].precio}"
-                                        data-plataforma="PS4" data-bs-toggle="modal"
-                                        data-bs-target="#cartModal">
+                                        data-plataforma="PS4" data-bs-toggle="modal" data-bs-target="#cartModal">
 
                                         Agregar al carro
 
@@ -317,8 +317,7 @@
                                     <button class="btn btn-outline-secondary btn-agregar"
                                         th:data-id="${productosPorNombre['Gran Turismo 7'].id}"
                                         th:data-precio="${productosPorNombre['Gran Turismo 7'].precio}"
-                                        data-plataforma="PS4" data-bs-toggle="modal"
-                                        data-bs-target="#cartModal">
+                                        data-plataforma="PS4" data-bs-toggle="modal" data-bs-target="#cartModal">
 
                                         Agregar al carro
 
@@ -391,14 +390,14 @@
                                                 S/ 2399.00
                                             </span>
 
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="ps5-slim"
-                                                data-nombre="Consola PlayStation 5"
-                                                th:attr="data-imagen=@{/img/play5.png}" data-precio="2399.00"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Consola PlayStation 5'].id}"
+                                                th:data-precio="${productosPorNombre['Consola PlayStation 5'].precio}"
+                                                th:data-nombre="${productosPorNombre['Consola PlayStation 5'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Consola PlayStation 5'].imagen}"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
 
                                         </div>
@@ -437,14 +436,14 @@
                                                 S/ 4199.00
                                             </span>
 
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="ps5-pro"
-                                                data-nombre="Consola PlayStation 5 Pro"
-                                                th:attr="data-imagen=@{/img/play5Pro.png}" data-precio="4199.00"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Consola PlayStation 5 Pro'].id}"
+                                                th:data-precio="${productosPorNombre['Consola PlayStation 5 Pro'].precio}"
+                                                th:data-nombre="${productosPorNombre['Consola PlayStation 5 Pro'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Consola PlayStation 5 Pro'].imagen}"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
 
                                         </div>
@@ -484,14 +483,14 @@
                                                 S/ 329.00
                                             </span>
 
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="dualsense"
-                                                data-nombre="Control inalámbrico DualSense"
-                                                th:attr="data-imagen=@{/img/control_inalambrico_dualSense.png}"
-                                                data-precio="329.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Control inalámbrico DualSense'].id}"
+                                                th:data-precio="${productosPorNombre['Control inalámbrico DualSense'].precio}"
+                                                th:data-nombre="${productosPorNombre['Control inalámbrico DualSense'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Control inalámbrico DualSense'].imagen}"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
 
                                         </div>
@@ -530,17 +529,15 @@
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 699.00
                                             </span>
-
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="pulse-elite"
-                                                data-nombre="Auriculares inalámbricos PULSE Elite"
-                                                th:attr="data-imagen=@{/img/auriculares_inalambrico_PulseElite.png}"
-                                                data-precio="699.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Auriculares inalámbricos PULSE Elite'].id}"
+                                                th:data-precio="${productosPorNombre['Auriculares inalámbricos PULSE Elite'].precio}"
+                                                th:data-nombre="${productosPorNombre['Auriculares inalámbricos PULSE Elite'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Auriculares inalámbricos PULSE Elite'].imagen}"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
 
                                     </div>
@@ -573,10 +570,11 @@
                                                 S/ 749.00
                                             </span>
                                             <button class="btn btn-outline-secondary btn-agregar"
-                                                data-id="pulse-explore"
-                                                data-nombre="Audífonos inalámbricos PULSE Explore"
-                                                th:attr="data-imagen=@{/img/auriculares_inalambrico_PulseExplore.png}"
-                                                data-precio="749.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                th:data-id="${productosPorNombre['Audífonos inalámbricos PULSE Explore'].id}"
+                                                th:data-precio="${productosPorNombre['Audífonos inalámbricos PULSE Explore'].precio}"
+                                                th:data-nombre="${productosPorNombre['Audífonos inalámbricos PULSE Explore'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Audífonos inalámbricos PULSE Explore'].imagen}"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
                                                 Agregar al carro
                                             </button>
@@ -608,9 +606,11 @@
                                                 S/ 899.00
                                             </span>
                                             <button class="btn btn-outline-secondary btn-agregar"
-                                                data-id="dualsense-edge" data-nombre="Control DualSense Edge"
-                                                th:attr="data-imagen=@{/img/control_inalambrico_Edge.png}"
-                                                data-precio="899.00" data-plataforma="PS5" data-bs-toggle="modal"
+                                                th:data-id="${productosPorNombre['Control inalámbrico DualSense Edge'].id}"
+                                                th:data-precio="${productosPorNombre['Control inalámbrico DualSense Edge'].precio}"
+                                                th:data-nombre="${productosPorNombre['Control inalámbrico DualSense Edge'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Control inalámbrico DualSense Edge'].imagen}"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
                                                 Agregar al carro
                                             </button>
@@ -640,9 +640,11 @@
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 359.00
                                             </span>
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="access"
-                                                data-nombre="Control Access"
-                                                th:attr="data-imagen=@{/img/control_access.png}" data-precio="359.00"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Control Access'].id}"
+                                                th:data-precio="${productosPorNombre['Control Access'].precio}"
+                                                th:data-nombre="${productosPorNombre['Control Access'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Control Access'].imagen}"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
                                                 Agregar al carro
@@ -674,8 +676,10 @@
                                                 S/ 59.99
                                             </span>
                                             <button class="btn btn-outline-secondary btn-agregar"
-                                                data-id="control-multimedia" data-nombre="Control multimedia"
-                                                th:attr="data-imagen=@{/img/control_multimedia.png}" data-precio="59.99"
+                                                th:data-id="${productosPorNombre['Control multimedia'].id}"
+                                                th:data-precio="${productosPorNombre['Control multimedia'].precio}"
+                                                th:data-nombre="${productosPorNombre['Control multimedia'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Control multimedia'].imagen}"
                                                 data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
                                                 Agregar al carro
@@ -711,16 +715,15 @@
                                             <span class="precio-slide fs-3 fw-bold">
                                                 S/ 139.99
                                             </span>
-
-                                            <button class="btn btn-outline-secondary btn-agregar" data-id="camara-hd"
-                                                data-nombre="Cámara HD" th:attr="data-imagen=@{/img/camaraHD.png}"
-                                                data-precio="139.99" data-plataforma="PS5" data-bs-toggle="modal"
+                                            <button class="btn btn-outline-secondary btn-agregar"
+                                                th:data-id="${productosPorNombre['Cámara HD'].id}"
+                                                th:data-precio="${productosPorNombre['Cámara HD'].precio}"
+                                                th:data-nombre="${productosPorNombre['Cámara HD'].nombre}"
+                                                th:data-imagen="${productosPorNombre['Cámara HD'].imagen}"
+                                                data-plataforma="PS5" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal">
-
                                                 Agregar al carro
-
                                             </button>
-
                                         </div>
 
                                     </div>

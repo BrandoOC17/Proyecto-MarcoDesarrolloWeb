@@ -38,7 +38,30 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Call of Duty: Black OPS III',89.99,'PS4','/img/call_of_duty_black_ops3.jpg'),(2,'EA Sports FC 26',280.99,'PS4','/img/fc26.png'),(3,'Marvel Spider-Man 2',310.99,'PS5','/img/marvel_spider_man2.png'),(4,'Astro Bot',206.99,'PS5','/img/astrobot.png'),(5,'God of War Ragnarok',150.99,'PS5','/img/god_of_war_ragnarok.png'),(6,'The Last of Us Part II',179.99,'PS4','/img/the_last_of_us_part2.png'),(7,'Horizont Zero Dawn',150.99,'PS5','/img/horizont_zero_dawn_remastered.png'),(8,'Gran Turismo 7',165.99,'PS4','/img/gran_turismo7.png'),(9,'Uncharted 4',69.99,'PS4','/img/uncharted4.jpg'),(10,'Resident Evil 3',120.99,'PS4','/img/resident_evil3.jpg'),(11,'Red Dead Redemption II',150.99,'PS4','/img/red_dead_redemption2.jpg'),(12,'Ghost of Tsushima',170.99,'PS4','/img/ghost.jpg');
+INSERT INTO `producto` VALUES 
+(1,'Call of Duty: Black OPS III',89.99,'PS4','/img/call_of_duty_black_ops3.jpg'),
+(2,'EA Sports FC 26',280.99,'PS4','/img/fc26.png'),
+(3,'Marvel Spider-Man 2',310.99,'PS5','/img/marvel_spider_man2.png'),
+(4,'Astro Bot',206.99,'PS5','/img/astrobot.png'),
+(5,'God of War Ragnarok',150.99,'PS5','/img/god_of_war_ragnarok.png'),
+(6,'The Last of Us Part II',179.99,'PS4','/img/the_last_of_us_part2.png'),
+(7,'Horizont Zero Dawn',150.99,'PS5','/img/horizont_zero_dawn_remastered.png'),
+(8,'Gran Turismo 7',165.99,'PS4','/img/gran_turismo7.png'),
+(9,'Uncharted 4',69.99,'PS4','/img/uncharted4.jpg'),
+(10,'Resident Evil 3',120.99,'PS4','/img/resident_evil3.jpg'),
+(11,'Red Dead Redemption II',150.99,'PS4','/img/red_dead_redemption2.jpg'),
+(12,'Ghost of Tsushima',170.99,'PS4','/img/ghost.jpg');
+
+INSERT INTO `producto` VALUES
+(13, 'Consola PlayStation 5', 2399.00, 'PS5', '/img/play5.png'),
+(14, 'Consola PlayStation 5 Pro', 4199.00, 'PS5', '/img/play5Pro.png'),
+(15, 'Control inalámbrico DualSense', 329.00, 'PS5', '/img/control_inalambrico_dualSense.png'),
+(16, 'Auriculares inalámbricos PULSE Elite', 699.00, 'PS5', '/img/auriculares_inalambrico_PulseElite.png'),
+(17, 'Audífonos inalámbricos PULSE Explore', 749.00, 'PS5', '/img/auriculares_inalambrico_PulseExplore.png'),
+(18, 'Control inalámbrico DualSense Edge', 899.00, 'PS5', '/img/control_inalambrico_Edge.png'),
+(19, 'Control Access', 359.00, 'PS5', '/img/control_access.png'),
+(20, 'Control multimedia', 59.99, 'PS5', '/img/control_multimedia.png'),
+(21, 'Cámara HD', 139.99, 'PS5', '/img/camaraHD.png');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
