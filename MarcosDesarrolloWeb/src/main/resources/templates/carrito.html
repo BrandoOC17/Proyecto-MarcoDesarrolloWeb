@@ -217,12 +217,11 @@
                             <i class="fa-solid fa-arrow-left me-1"></i> Cambiar medio de pago
                         </button>
                         <h3 id="pago-yape-titulo" class="fs-5 fw-bold">Escanea el QR de Yape</h3>
-                        <p class="text-muted small">No realices pagos: este flujo solo simula la confirmación.</p>
                         <img class="pago-qr" src="../static/img/yape-qr.png" th:src="@{/img/yape-qr.png}"
                             alt="Código QR de Yape proporcionado para la demostración">
                         <p class="fw-bold fs-5 mt-3 mb-3" id="total-pago-yape">Total: S/ 0.00</p>
                         <button type="button" class="btn btn-primary rounded-pill px-4" data-confirmar-pago="Yape">
-                            Simular confirmación
+                            CONFIRMAR PAGO
                         </button>
                     </section>
 
@@ -231,9 +230,6 @@
                             <i class="fa-solid fa-arrow-left me-1"></i> Cambiar medio de pago
                         </button>
                         <h3 id="pago-tarjeta-titulo" class="fs-5 fw-bold">Datos de tarjeta de prueba</h3>
-                        <div class="alert alert-warning py-2 small" role="note">
-                            Usa datos ficticios. Este formulario no procesa ni guarda información de tarjeta.
-                        </div>
                         <form id="formulario-tarjeta" novalidate>
                             <div class="mb-3">
                                 <label for="titular-tarjeta" class="form-label">Nombre del titular</label>
@@ -265,7 +261,7 @@
                             </div>
                             <p class="fw-bold fs-5 mt-3 mb-3" id="total-pago-tarjeta">Total: S/ 0.00</p>
                             <button type="submit" class="btn btn-primary rounded-pill px-4">
-                                Simular pago con tarjeta
+                                PAGAR
                             </button>
                         </form>
                     </section>
