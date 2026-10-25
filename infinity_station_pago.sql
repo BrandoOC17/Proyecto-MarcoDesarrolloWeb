@@ -34,7 +34,8 @@ CREATE TABLE `pago` (
   CONSTRAINT `fk_pago_pedido` FOREIGN KEY (`idpedido`) REFERENCES `pedido` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+ALTER TABLE Pago
+ADD CONSTRAINT uq_pago_idpedido UNIQUE (idpedido);
 --
 -- Dumping data for table `pago`
 --
