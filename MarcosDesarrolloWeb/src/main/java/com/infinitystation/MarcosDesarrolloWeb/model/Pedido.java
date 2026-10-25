@@ -15,8 +15,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToOne;
+
 
 @Entity
 @Table(name = "pedido")
@@ -42,7 +43,7 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")
     private List<DetallePedido> detalles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToOne(mappedBy = "pedido")
     private Set<Pago> pagos = new LinkedHashSet<>();
 
     public Pedido() {
