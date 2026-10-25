@@ -121,15 +121,15 @@
                                 </div>
 
                                 <h6 class="fw-bold">Pago</h6>
-                                <div th:each="pago : ${pedido.pagos}">
+                                <div th:if="${pedido.pago != null}">
                                     <p class="small mb-1">
-                                        Método: <span th:text="${pago.metodoPago}">Yape</span>
-                                        · Estado: <span th:text="${pago.estado}">Pendiente</span>
-                                        · Monto: <span th:text="'S/ ' + ${pago.monto}">S/ 0.00</span>
-                                        · Fecha: <span th:text="${pago.fechaPago}">Fecha</span>
+                                        Método: <span th:text="${pedido.pago.metodoPago}">Yape</span>
+                                        · Estado: <span th:text="${pedido.pago.estado}">Pendiente</span>
+                                        · Monto: <span th:text="'S/ ' + ${pedido.pago.monto}">S/ 0.00</span>
+                                        · Fecha: <span th:text="${pedido.pago.fechaPago}">Fecha</span>
                                     </p>
                                 </div>
-                                <p th:if="${#lists.isEmpty(pedido.pagos)}" class="small text-muted mb-0">
+                                <p th:if="${pedido.pago == null}" class="small text-muted mb-0">
                                     No hay información de pago registrada.
                                 </p>
                             </div>

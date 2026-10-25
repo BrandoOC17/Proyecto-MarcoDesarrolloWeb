@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,7 +42,7 @@ public class Pedido {
     private List<DetallePedido> detalles = new ArrayList<>();
 
     @OneToOne(mappedBy = "pedido")
-    private Set<Pago> pagos = new LinkedHashSet<>();
+    private Pago pago;
 
     public Pedido() {
     }
@@ -89,8 +87,12 @@ public class Pedido {
         return detalles;
     }
 
-    public Set<Pago> getPagos() {
-        return pagos;
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 
     public String getCliente() {

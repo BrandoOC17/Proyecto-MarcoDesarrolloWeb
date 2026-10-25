@@ -10,11 +10,11 @@ import com.infinitystation.MarcosDesarrolloWeb.model.Pedido;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Override
-    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto", "pagos"})
+    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto", "pago"})
     List<Pedido> findAll();
 
     // Busca el historial del usuario y carga los datos que necesita la vista.
-    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto", "pagos"})
+    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto", "pago"})
     List<Pedido> findByUsuario_IdOrderByFechaPedidoDesc(Long usuarioId);
 
     // Comprueba si un usuario tiene pedidos antes de permitir eliminarlo.

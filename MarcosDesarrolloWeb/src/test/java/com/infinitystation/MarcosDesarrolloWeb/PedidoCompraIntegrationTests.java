@@ -131,10 +131,10 @@ class PedidoCompraIntegrationTests {
                 .findFirst()
                 .orElseThrow()
                 .getCantidad());
-        assertEquals(1, compraGuardada.getPagos().size());
-        assertEquals("Yape", compraGuardada.getPagos().iterator().next().getMetodoPago());
-        assertNotNull(compraGuardada.getPagos().iterator().next().getFechaPago());
-        assertEquals(compraGuardada.getTotal(), compraGuardada.getPagos().iterator().next().getMonto());
+        assertNotNull(compraGuardada.getPago());
+        assertEquals("Yape", compraGuardada.getPago().getMetodoPago());
+        assertNotNull(compraGuardada.getPago().getFechaPago());
+        assertEquals(compraGuardada.getTotal(), compraGuardada.getPago().getMonto());
     }
 
     // Comprueba los CRUD administrativos, la protección de rutas y la validación del formulario.
