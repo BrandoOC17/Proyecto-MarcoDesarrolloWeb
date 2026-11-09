@@ -93,7 +93,8 @@
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <dt>Estado del pedido</dt>
-                                        <dd><span class="badge rounded-pill text-bg-warning"
+                                        <dd><span class="badge rounded-pill"
+                                            th:classappend="${#strings.toUpperCase(pedido.estado) == 'COMPLETADO'} ? 'text-bg-success' : 'text-bg-warning'"
                                             th:text="${pedido.estado}">Pendiente</span></dd>
                                     </div>
                                     <div class="col-6 col-md-3">
