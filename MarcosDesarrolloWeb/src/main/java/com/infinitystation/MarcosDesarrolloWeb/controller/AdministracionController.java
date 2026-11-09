@@ -6,8 +6,11 @@ import com.infinitystation.MarcosDesarrolloWeb.service.PedidoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,9 +43,12 @@ public class AdministracionController {
                 .filter(p -> "PENDIENTE".equalsIgnoreCase(p.getEstado()))
                 .count();
 
-        // Calcular ingresos de los pedidos completados
+        // Ingresos del mes actual: solo pedidos completados de este mes
+        YearMonth mesActual = YearMonth.now();
         BigDecimal ingresosMes = pedidos.stream()
                 .filter(p -> "COMPLETADO".equalsIgnoreCase(p.getEstado()))
+                .filter(p -> p.getFechaPedido() != null
+                        && YearMonth.from(p.getFechaPedido()).equals(mesActual))
                 .map(Pedido::getTotal)
                 .filter(total -> total != null)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -54,5 +60,16 @@ public class AdministracionController {
         model.addAttribute("ingresosMes", ingresosMes);
 
         return "admin";
+    }
+
+    // Botón "check": pasa el pedido de PENDIENTE a COMPLETADO y recarga el panel
+    @PostMapping("/administracion/pedidos/{id}/completar")
+    public String completarPedido(@PathVariable Long id, HttpSession session) {
+        if (!Boolean.TRUE.equals(session.getAttribute("esAdministrador"))) {
+            return "redirect:/login";
+        }
+
+        pedidoService.completarPedido(id);
+        return "redirect:/administracion";
     }
 }

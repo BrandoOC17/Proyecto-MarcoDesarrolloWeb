@@ -128,6 +128,26 @@ public class PedidoService {
         return pedido;
     }
 
+    // Marca un pedido (y su pago) como COMPLETADO. Solo aplica si estaba PENDIENTE.
+    @Transactional
+    public void completarPedido(Long pedidoId) {
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el pedido."));
+
+        if (!"PENDIENTE".equalsIgnoreCase(pedido.getEstado())) {
+            return;
+        }
+
+        pedido.setEstado("COMPLETADO");
+        pedidoRepository.save(pedido);
+
+        Pago pago = pedido.getPago();
+        if (pago != null) {
+            pago.setEstado("COMPLETADO");
+            pagoRepository.save(pago);
+        }
+    }
+
     // Obtener pedidos completados
     public List<Pedido> listarPedidosCompletados() {
         return listarPedidos().stream()

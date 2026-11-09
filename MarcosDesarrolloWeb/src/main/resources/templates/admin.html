@@ -130,6 +130,7 @@
                                 <th class="ps-3">ID Pedido</th>
                                 <th>Cliente</th>
                                 <th>Producto</th>
+                                <th>Fecha</th>
                                 <th>Total</th>
                                 <th>Estado</th>
                                 <th class="text-end pe-3">Acciones</th>
@@ -154,6 +155,10 @@
 
                                 <td th:text="${pedido.producto}">
                                     Videojuego
+                                </td>
+
+                                <td th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}">
+                                    01/01/2026 00:00
                                 </td>
 
                                 <td th:text="'S/ ' + ${pedido.total}">
@@ -187,6 +192,18 @@
 
                                         <i class="bi bi-eye"></i>
 
+                                    </button>
+
+                                    <!-- Botón check: abre el modal de confirmación (solo si está pendiente) -->
+                                    <button type="button"
+                                            th:if="${#strings.toUpperCase(pedido.estado) == 'PENDIENTE'}"
+                                            class="btn btn-sm btn-outline-success ms-1 btn-completar"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalCompletar"
+                                            th:data-id="${pedido.id}"
+                                            th:data-cliente="${pedido.cliente}"
+                                            title="Marcar como completado">
+                                        <i class="bi bi-check-lg"></i>
                                     </button>
 
                                 </td>
@@ -307,6 +324,59 @@
     </div>
 
 
+    <!-- MODAL CONFIRMAR PEDIDO COMPLETADO -->
+    <div class="modal fade"
+         id="modalCompletar"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+
+            <div class="modal-content">
+
+                <form id="formCompletar"
+                      method="post"
+                      th:attr="data-base=@{/administracion/pedidos/}">
+
+                    <div class="modal-body text-center p-4">
+
+                        <i class="bi bi-check-circle text-success display-4"></i>
+
+                        <h5 class="fw-bold mt-3 mb-2">
+                            ¿Marcar como completado?
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Pedido <strong id="completar-id"></strong>
+                            de <span id="completar-cliente"></span>
+                        </p>
+
+                    </div>
+
+                    <div class="modal-footer justify-content-center border-0 pt-0 pb-4">
+
+                        <button type="button"
+                                class="btn btn-outline-secondary px-4"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-success px-4">
+                            Aceptar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- BOTÓN SCROLL UP -->
     <a th:href="@{#}"
        class="btn btn-primary rounded-0 position-fixed bottom-0 end-0 m-4 d-none"
@@ -326,6 +396,18 @@
 
     <!-- JavaScript Principal -->
     <script th:src="@{/js/script.js}"></script>
+
+    <!-- Modal confirmar completado -->
+    <script>
+        document.getElementById('modalCompletar').addEventListener('show.bs.modal', function (event) {
+            var boton = event.relatedTarget;
+            var id = boton.getAttribute('data-id');
+            var form = document.getElementById('formCompletar');
+            form.action = form.getAttribute('data-base') + id + '/completar';
+            document.getElementById('completar-id').textContent = '#' + id;
+            document.getElementById('completar-cliente').textContent = boton.getAttribute('data-cliente');
+        });
+    </script>
 
 </body>
 
