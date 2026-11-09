@@ -30,9 +30,9 @@ CREATE TABLE `pago` (
   `fecha_pago` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `estado` varchar(20) NOT NULL DEFAULT 'PENDIENTE',
   PRIMARY KEY (`id`),
-  KEY `fk_pago_pedido` (`idpedido`),
+  UNIQUE KEY `uq_pago_idpedido` (`idpedido`),
   CONSTRAINT `fk_pago_pedido` FOREIGN KEY (`idpedido`) REFERENCES `pedido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `pago` (
 
 LOCK TABLES `pago` WRITE;
 /*!40000 ALTER TABLE `pago` DISABLE KEYS */;
-INSERT INTO `pago` VALUES (5,6,89.99,'Yape','2026-10-23 05:54:31','PENDIENTE');
+INSERT INTO `pago` VALUES (5,6,89.99,'Yape','2026-10-23 05:54:31','PENDIENTE'),(9,10,280.99,'Yape','2026-10-25 03:04:55','PENDIENTE');
 /*!40000 ALTER TABLE `pago` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-23  2:33:12
+-- Dump completed on 2026-10-25 18:08:43
