@@ -11,8 +11,8 @@
 	<groupId>com.infinitystation</groupId>
 	<artifactId>MarcosDesarrolloWeb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>MarcosDesarrolloWeb</name>
+	<description>Infinity Station - tienda de videojuegos con Spring Boot, Thymeleaf, MySQL, Spring Security y JWT</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -74,10 +74,16 @@
             <scope>runtime</scope>
         </dependency>
 
-		<!--SPRING SECURITY-->
+		<!-- SPRING SECURITY: autenticación, autorización por roles, CSRF y restricción de rutas -->
 		<dependency>
-    		<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-crypto</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- JWT: generación y validación de tokens (Nimbus JOSE, HS256) para la API REST -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
 		</dependency>
 
 		<!-- Carga variables del archivo .env en Spring Boot 4 durante el desarrollo. -->

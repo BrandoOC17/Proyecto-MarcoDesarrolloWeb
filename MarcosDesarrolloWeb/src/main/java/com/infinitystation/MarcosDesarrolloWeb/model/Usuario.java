@@ -3,6 +3,8 @@ package com.infinitystation.MarcosDesarrolloWeb.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -43,6 +45,11 @@ public class Usuario {
     @NotBlank(message = "La contraseña es obligatoria.")
     @Size(max = 255, message = "La contraseña codificada no puede superar 255 caracteres.")
     private String contraseña;
+
+    // Rol del usuario: ADMINISTRADOR o CLIENTE (por defecto, toda cuenta nueva es CLIENTE).
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false, length = 20)
+    private Rol rol = Rol.CLIENTE;
 
     @OneToMany(mappedBy = "usuario")
     private List<Pedido> pedidos = new ArrayList<>();
@@ -86,6 +93,14 @@ public class Usuario {
 
     public void setPassword(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public List<Pedido> getPedidos() {

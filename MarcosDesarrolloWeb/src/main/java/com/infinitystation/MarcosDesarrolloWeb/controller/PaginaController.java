@@ -15,10 +15,13 @@ import com.infinitystation.MarcosDesarrolloWeb.service.ProductoService;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.infinitystation.MarcosDesarrolloWeb.security.UsuarioPrincipal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,13 +73,9 @@ public class PaginaController {
     }
     
     @GetMapping("/compras")
-    public String compras(HttpSession session, Model model) {
-        Object usuarioId = session.getAttribute("usuarioId");
-        if (!(usuarioId instanceof Long id)) {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("pedidos", pedidoService.listarPedidosUsuario(id));
+    public String compras(@AuthenticationPrincipal UsuarioPrincipal usuario, Model model) {
+        // Solo el rol CLIENTE llega aquí (SecurityConfig) y únicamente ve sus propias compras.
+        model.addAttribute("pedidos", pedidoService.listarPedidosUsuario(usuario.getId()));
         return "compras";
     }
 
@@ -84,12 +83,13 @@ public class PaginaController {
     @PostMapping("/compras/confirmar")
     public ResponseEntity<Map<String, Object>> confirmarCompra(
             @RequestBody CompraRequest solicitud,
+            @AuthenticationPrincipal UsuarioPrincipal usuario,
             HttpSession session) {
-        Object usuarioId = session.getAttribute("usuarioId");
-        if (!(usuarioId instanceof Long id)) {
+        if (usuario == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Inicia sesión para confirmar la compra."));
         }
+        Long id = usuario.getId();
 
         String confirmacionId = solicitud == null ? null : solicitud.confirmacionId();
         if (confirmacionId == null || confirmacionId.isBlank()) {

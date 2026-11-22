@@ -48,6 +48,24 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
+    // Busca por nombre del cliente (contiene) o por número de pedido (exacto, con o sin #).
+    public List<Pedido> buscarPedidos(String termino) {
+        return filtrarPedidos(listarPedidos(), termino);
+    }
+
+    // Filtra una lista ya cargada; sin término devuelve todos los pedidos.
+    public List<Pedido> filtrarPedidos(List<Pedido> pedidos, String termino) {
+        String buscado = termino == null ? "" : termino.trim().toLowerCase();
+        if (buscado.isEmpty()) {
+            return pedidos;
+        }
+        String idBuscado = buscado.startsWith("#") ? buscado.substring(1) : buscado;
+        return pedidos.stream()
+                .filter(p -> String.valueOf(p.getId()).equals(idBuscado)
+                        || p.getCliente().toLowerCase().contains(buscado))
+                .toList();
+    }
+
     // Devuelve únicamente las compras asociadas al usuario autenticado.
     public List<Pedido> listarPedidosUsuario(Long usuarioId) {
         return pedidoRepository.findByUsuario_IdOrderByFechaPedidoDesc(usuarioId);

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Token CSRF para el fetch de confirmar compra (lo lee script.js) -->
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
     <title>Carrito | Infinity Station</title>
 
     <!-- Bootstrap -->

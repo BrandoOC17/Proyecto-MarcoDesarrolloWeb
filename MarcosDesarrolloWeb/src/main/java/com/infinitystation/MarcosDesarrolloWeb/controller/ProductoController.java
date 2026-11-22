@@ -3,7 +3,6 @@ package com.infinitystation.MarcosDesarrolloWeb.controller;
 import com.infinitystation.MarcosDesarrolloWeb.model.Producto;
 import com.infinitystation.MarcosDesarrolloWeb.service.ProductoService;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -34,22 +33,14 @@ public class ProductoController {
 
     // Muestra el catálogo administrativo de productos.
     @GetMapping("/administracion/productos")
-    public String administrarProductos(Model model, HttpSession session) {
-        if (!esAdministrador(session)) {
-            return "redirect:/login";
-        }
-
+    public String administrarProductos(Model model) {
         model.addAttribute("productos", productoService.listarProductos());
         return "productos-admin";
     }
 
     // Abre un formulario vacío para registrar un producto.
     @GetMapping("/administracion/productos/nuevo")
-    public String nuevoProducto(Model model, HttpSession session) {
-        if (!esAdministrador(session)) {
-            return "redirect:/login";
-        }
-
+    public String nuevoProducto(Model model) {
         model.addAttribute("producto", new Producto());
         return "producto-form";
     }
@@ -59,12 +50,7 @@ public class ProductoController {
     public String editarProducto(
             @PathVariable Long id,
             Model model,
-            HttpSession session,
             RedirectAttributes attributes) {
-        if (!esAdministrador(session)) {
-            return "redirect:/login";
-        }
-
         Producto producto = productoService.buscarPorId(id);
         if (producto == null) {
             attributes.addFlashAttribute("error", "No se encontró el producto.");
@@ -80,11 +66,7 @@ public class ProductoController {
     public String guardarProducto(
             @Valid @ModelAttribute("producto") Producto producto,
             BindingResult resultado,
-            HttpSession session,
             RedirectAttributes attributes) {
-        if (!esAdministrador(session)) {
-            return "redirect:/login";
-        }
         if (resultado.hasErrors()) {
             return "producto-form";
         }
@@ -98,12 +80,7 @@ public class ProductoController {
     @PostMapping("/administracion/productos/{id}/eliminar")
     public String eliminarProducto(
             @PathVariable Long id,
-            HttpSession session,
             RedirectAttributes attributes) {
-        if (!esAdministrador(session)) {
-            return "redirect:/login";
-        }
-
         if (productoService.eliminarProducto(id)) {
             attributes.addFlashAttribute("mensaje", "El producto se eliminó correctamente.");
         } else {
@@ -113,8 +90,4 @@ public class ProductoController {
         return "redirect:/administracion/productos";
     }
 
-    // Comprueba que la sesión pertenece al administrador.
-    private boolean esAdministrador(HttpSession session) {
-        return Boolean.TRUE.equals(session.getAttribute("esAdministrador"));
-    }
 }

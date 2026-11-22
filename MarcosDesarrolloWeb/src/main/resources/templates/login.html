@@ -90,6 +90,13 @@
                                     Iniciar sesión
                                 </h3>
 
+                                <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                                    Correo o contraseña incorrectos.
+                                </div>
+                                <div class="alert alert-success" role="alert" th:if="${param.registro}">
+                                    Tu cuenta fue creada. Ya puedes iniciar sesión.
+                                </div>
+
                                 <!-- FORMULARIO -->
                                 <form th:action="@{/login}" method="post">
 

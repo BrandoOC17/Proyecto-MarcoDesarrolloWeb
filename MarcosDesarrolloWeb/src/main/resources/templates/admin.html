@@ -111,10 +111,28 @@
         <!-- TABLA DETALLADA DE PEDIDOS -->
         <div class="card shadow-sm border-0">
 
-            <div class="card-header bg-white py-3">
+            <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <h5 class="mb-0 fw-bold">
                     Listado de Órdenes Recientes
                 </h5>
+
+                <!-- BUSCADOR: filtra por nombre del cliente o por N.º de pedido -->
+                <form th:action="@{/administracion}" method="get" class="d-flex gap-2" role="search">
+                    <input type="search"
+                           name="q"
+                           th:value="${busqueda}"
+                           class="form-control"
+                           placeholder="Buscar por cliente o N.º de pedido"
+                           aria-label="Buscar pedidos">
+                    <button type="submit" class="btn btn-primary" aria-label="Buscar">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <a th:if="${busqueda != null and !#strings.isEmpty(busqueda)}"
+                       th:href="@{/administracion}"
+                       class="btn btn-outline-secondary">
+                        Limpiar
+                    </a>
+                </form>
             </div>
 
 
@@ -140,6 +158,13 @@
 
 
                         <tbody>
+
+                            <!-- SIN RESULTADOS -->
+                            <tr th:if="${#lists.isEmpty(pedidos)}">
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    No se encontraron pedidos.
+                                </td>
+                            </tr>
 
                             <!-- PEDIDOS DINÁMICOS -->
                             <tr th:each="pedido : ${pedidos}">
@@ -336,6 +361,8 @@
                 <form id="formCompletar"
                       method="post"
                       th:attr="data-base=@{/administracion/pedidos/}">
+
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
                     <div class="modal-body text-center p-4">
 

@@ -28,7 +28,7 @@
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
-                        <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Acciones</th></tr>
+                        <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Acciones</th></tr>
                     </thead>
                     <tbody>
                         <tr th:each="usuario : ${usuarios}">
@@ -36,10 +36,15 @@
                             <td th:text="${usuario.nombre}">Usuario</td>
                             <td th:text="${usuario.correo}">correo@example.com</td>
                             <td>
+                                <span class="badge"
+                                    th:classappend="${usuario.rol.name() == 'ADMINISTRADOR'} ? 'text-bg-dark' : 'text-bg-secondary'"
+                                    th:text="${usuario.rol}">CLIENTE</span>
+                            </td>
+                            <td>
                                 <div class="d-flex gap-2">
                                     <a class="btn btn-sm btn-outline-primary"
                                         th:href="@{/administracion/usuarios/{id}/editar(id=${usuario.id})}">Editar</a>
-                                    <form method="post"
+                                    <form method="post" th:if="${usuario.rol.name() != 'ADMINISTRADOR'}"
                                         th:action="@{/administracion/usuarios/{id}/eliminar(id=${usuario.id})}">
                                         <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
                                     </form>
@@ -47,7 +52,7 @@
                             </td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(usuarios)}">
-                            <td colspan="4" class="text-center py-4">No hay usuarios registrados.</td>
+                            <td colspan="5" class="text-center py-4">No hay usuarios registrados.</td>
                         </tr>
                     </tbody>
                 </table>

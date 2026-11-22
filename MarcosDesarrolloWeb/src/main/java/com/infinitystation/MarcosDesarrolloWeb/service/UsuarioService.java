@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.infinitystation.MarcosDesarrolloWeb.model.Rol;
 import com.infinitystation.MarcosDesarrolloWeb.model.Usuario;
 import com.infinitystation.MarcosDesarrolloWeb.repository.PedidoRepository;
 import com.infinitystation.MarcosDesarrolloWeb.repository.UsuarioRepository;
@@ -19,11 +19,13 @@ public class UsuarioService {
     private final PedidoRepository pedidoRepository;
     private final PasswordEncoder passwordEncoder;
 
-
-    public UsuarioService(UsuarioRepository usuarioRepository, PedidoRepository pedidoRepository) {
+    public UsuarioService(
+            UsuarioRepository usuarioRepository,
+            PedidoRepository pedidoRepository,
+            PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.pedidoRepository = pedidoRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Registra un usuario y cifra su contraseña antes de guardarlo.
@@ -34,20 +36,11 @@ public class UsuarioService {
         }
 
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setRol(Rol.CLIENTE); // las cuentas creadas desde la web siempre son CLIENTE
 
         usuarioRepository.save(usuario);
 
         return true;
-    }
-
-    public boolean validarUsuario(String correo, String contraseña) {
-        return autenticarUsuario(correo, contraseña).isPresent();
-    }
-
-    // Devuelve la cuenta autenticada para conservar su ID en la sesión.
-    public Optional<Usuario> autenticarUsuario(String correo, String contraseña) {
-        return usuarioRepository.findByCorreo(correo)
-                .filter(usuario -> passwordEncoder.matches(contraseña, usuario.getPassword()));
     }
 
     public List<Usuario> listarUsuarios() {

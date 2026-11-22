@@ -242,49 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// Validación exclusiva para el formulario de Login del Administrador
-document.addEventListener("DOMContentLoaded", () => {
-    const formLogin = document.getElementById("form-login");
-
-    if (formLogin) {
-        formLogin.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const correoIngresado = document.getElementById("correo").value;
-            const contraIngresada = document.getElementById("contra").value;
-
-            // Credenciales únicas requeridas
-            const correoAdmin = "adminInfinity@gmail.com";
-            const contraAdmin = "Keys2026";
-
-            if (correoIngresado === correoAdmin && contraIngresada === contraAdmin) {
-                // Redirige al panel de administración (estando en la misma carpeta templates)
-                window.location.href = "/administracion";
-            } else {
-                alert("Acceso denegado: Correo o contraseña de administrador incorrectos.");
-            }
-        });
-    }
-
-    // Control inteligente para el botón "Admin" del menú de navegación
-    const linkAdmin = document.getElementById("link-admin");
-
-    if (linkAdmin) {
-        linkAdmin.addEventListener("click", (e) => {
-            e.preventDefault();
-            const estaAutenticado = localStorage.getItem("adminAutenticado");
-
-            if (estaAutenticado === "true") {
-                // Apunta al controlador de Spring Boot sin .html
-                window.location.href = "/administracion";
-            } else {
-                // Apunta a la ruta del login sin .html
-                window.location.href = "/login";
-            }
-        });
-    }
-});
-
 // ================= FILTRO DE NOTICIAS =================
 document.addEventListener("DOMContentLoaded", () => {
     const filtros = document.querySelectorAll(".btn-filtro");
@@ -326,9 +283,17 @@ async function registrarCompra(metodoPago) {
         sessionStorage.setItem("confirmacionCompra", confirmacionId);
     }
 
+    // Spring Security exige el token CSRF en las peticiones POST
+    const metaToken = document.querySelector('meta[name="_csrf"]');
+    const metaCabecera = document.querySelector('meta[name="_csrf_header"]');
+    const cabeceras = { "Content-Type": "application/json" };
+    if (metaToken && metaCabecera) {
+        cabeceras[metaCabecera.content] = metaToken.content;
+    }
+
     const respuesta = await fetch("/compras/confirmar", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: cabeceras,
         credentials: "same-origin",
         body: JSON.stringify({
             metodoPago: metodoPago,
@@ -347,7 +312,13 @@ async function registrarCompra(metodoPago) {
         resultado = {};
     }
     if (!respuesta.ok) {
-        const error = new Error(resultado.error || "No se pudo registrar la compra. Inténtalo de nuevo.");
+        let mensaje = resultado.error || "No se pudo registrar la compra. Inténtalo de nuevo.";
+        if (respuesta.status === 401) {
+            mensaje = "Inicia sesión para confirmar la compra.";
+        } else if (respuesta.status === 403) {
+            mensaje = "Solo las cuentas de cliente pueden realizar compras.";
+        }
+        const error = new Error(mensaje);
         error.status = respuesta.status;
         throw error;
     }

@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MarcosDesarrolloWeb",
+            "request": "launch",
+            "mainClass": "com.infinitystation.MarcosDesarrolloWeb.MarcosDesarrolloWebApplication",
+            "projectName": "MarcosDesarrolloWeb",
+            "cwd": "${workspaceFolder}/MarcosDesarrolloWeb"
+        }
+    ]
+}
