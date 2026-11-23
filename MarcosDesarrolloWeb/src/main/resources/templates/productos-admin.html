@@ -20,7 +20,10 @@
                 <h1 class="h2 fw-bold">Administrar productos</h1>
                 <p class="text-muted mb-0">Registra y actualiza los productos del catálogo.</p>
             </div>
-            <a class="btn btn-primary" th:href="@{/administracion/productos/nuevo}">Nuevo producto</a>
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" th:href="@{/administracion}">Volver</a>
+                <a class="btn btn-primary" th:href="@{/administracion/productos/nuevo}">Nuevo producto</a>
+            </div>
         </div>
         <div class="alert alert-success" th:if="${mensaje}" th:text="${mensaje}"></div>
         <div class="alert alert-warning" th:if="${error}" th:text="${error}"></div>
